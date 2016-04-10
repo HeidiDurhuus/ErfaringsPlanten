@@ -1,0 +1,13 @@
+Plan:
+* Gerða alt tað, sum eg havi lært higartil:
+  - signup -check
+  - meteor methods
+  - ROUTING -check
+  - publish & subscribe
+  - test-data -check
+
+* bíða við fileupload, til eg havi lært tað á coursera.
+
+* plantearter kommer fra en af de tre open source plantelister.
+  - derefter kan naturplanteskolen o.a vælge fra listen og oprette varer
+  - en vare kan være på artsniveau, familie niveau og variant niveau
