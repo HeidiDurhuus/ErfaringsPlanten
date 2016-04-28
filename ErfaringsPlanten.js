@@ -2,56 +2,63 @@ Plants = new Mongo.Collection("plants");
 PlantLog = new Mongo.Collection("plantlog");
 
 if (Meteor.isClient) {
-  //////////////
-  /// configuration
-  //////////////
 
-  Accounts.ui.config({
-    requestPermissions: {},
-    extraSignupFields: [
-    {
-      fieldName: 'username',
-      fieldLabel: 'Brugernavn (bliver vist på skærm)',
-      inputType: 'text',
-      visible: true,
-      validate: function(value, errorFunction) {
-        if (!value) {
-          errorFunction("Please write your first name");
-          return false;
-        } else {
-          return true;
-        }
-      }
+//////////////////
+/// TEMPLATES
+/////////////////
+
+Template.show_update_plantlog.helpers({
+  create: function(){
+    console.log("show_update_plantlog create");
+  },
+  rendered: function(){
+    console.log("show_update_plantlog rendered");
+  },
+  destroyed: function(){
+    console.log("show_update_plantlog destroyed");
+  },
+  getPlantId: function(){
+    console.log(this._id);
+     console.log("plant id " + this._id);
+  }
+});
+
+Template.show_update_plantlog.events({
+  "submit .js-new-entry-plantlog": function(event){
+    event.preventDefault();
+    var date = getCheckedText(event.target.plantLogDate);
+    if(date == " I dag"){
+      date = new Date();
     }
-    ]
-  });
+    else{
+      date = new Date((Number(date.substring(6))+2000), (date.substring(3,5)-1), date.substring(0,2));
+    }
+     var plant_update = event.target.plantUpdate.value;
+     var plant_condition = getCheckedText(event.target.plantCondition);
+     var plantid = this._id;
 
-  // set up the main template the the router will use to build pages
-  Router.configure({
-    layoutTemplate: 'ApplicationLayout'
-  });
-
-  ///////////////
-  /// ROUTING
-  ///////////////
-
-  // specify the top level route, the page users see when they arrive at the site
-  Router.route('/', function () {
-    this.render("navbar", {to:"header"});
-    this.render("plant_log", {to:"main"});
-  });
-
-  Router.route('/new_plant_log', function () {
-    this.render("navbar", {to:"header"});
-    this.render("new_plant_log", {to:"main"});
-  });
-
-//////////////////
-/// HELPERS
-//////////////////
+     console.log("date:" + date );
+     console.log("plant_update: " + plant_update);
+     console.log("plant_condition: " + plant_condition);
+     console.log("plantid: " + plantid);
+     //var entry = []
+     /*her skal lægges ind i databasen et nyt object sidst i tabellen ($push)*/
+     PlantLog.update({_id:plantid}, {$push: { entries: {date: date, plant_update: plant_update, plant_condition: plant_condition}}});
+  }
+});
 
 
 Template.plant_log.helpers({
+  create: function(){
+    console.log("show_plant created");
+    this.updatePlantlog = new ReactiveVar(false);
+  },
+  rendered: function(){
+    console.log("show_plant rendered");
+  },
+  destroyed: function(){
+    console.log("show_plant destroyed");
+  },
   signedIn: function(){
     if(Meteor.userId()){
       Session.set("userid", Meteor.userId());
@@ -80,10 +87,28 @@ Template.new_plant_log.helpers({
   }
 });
 
+
+Template.show_plant.onCreated(function(){
+  console.log("show_plant onCreated");
+  this.updatePlantlog = new ReactiveVar(false);
+
+});
+
+
 Template.show_plant.helpers({
+  create: function(){
+    console.log("show_plant created");
+    this.updatePlantlog = new ReactiveVar(false);
+  },
+  rendered: function(){
+    console.log("show_plant rendered");
+  },
+  destroyed: function(){
+    console.log("show_plant destroyed");
+  },
   getDate: function(date){
     if(date){
-      console.log(date);
+    //  console.log(date);
       var month = date.getMonth(); // giver en exception når bruger ikke har valgt dato. Det skal gøres obligatorisk at vælge dato.
       month = month + 1;
       return date.getDate() + "/" + month + "/" + date.getFullYear();
@@ -91,87 +116,38 @@ Template.show_plant.helpers({
     return undefined;
   },
   updatePlantlog: function(){
-    console.log("helper returning: " + Session.get("updatePlantlog"));
-    return Session.get("updatePlantlog");
+    console.log("updatePlantlog function");
+    console.log(this);
+    if(!Template.instance().updatePlantlog.get()){
+      this.updatePlantlog = new ReactiveVar(false);
+    }
+    console.log("helper returning: " + Template.instance().updatePlantlog.get());
+    return Template.instance().updatePlantlog.get();
   },
   getPlant:function(plantid){
     return Plants.findOne({_id:plantid})
   }
 });
 
-
-Template.update_plantlog.helpers({
-  getPlantId: function(){
-    console.log(this._id);
-     console.log("plant id " + this._id);
+Template.show_plant.events({
+  "click .js-update-plantlog": function(event, template){
+    event.preventDefault();
+    console.log("show_plant");
+    if(Template.instance().updatePlantlog.get()){
+      Template.instance().updatePlantlog.set(false);
+      console.log("was true, now " + Template.instance().updatePlantlog.get());
+    }else{
+      Template.instance().updatePlantlog.set(true);
+      console.log("was false, now " + Template.instance().updatePlantlog.get());
+    }
   }
 });
-
-
-
 
 Template.show_plant_list.helpers({
   plants: function(){
     return PlantLog.find({user_id:Meteor.userId()});
   }
 });
-
-
-/////////////////
-/// EVENTS
-////////////////
-
-
-Template.show_plant.events({
-  "click .js-update-plantlog": function(event, template){
-    event.preventDefault();
-    if(Session.get("updatePlantlog")){
-
-      Session.set("updatePlantlog", false);
-      console.log("this:" + this._id);
-      console.log("event: " + event.target);
-      console.log("template: " + template);
-      console.log("was true, now " + Session.get("updatePlantlog"));
-      /*
-      Nu bliver session sat uanset hvilken log-knap man trykker på.
-      Derfor må også _id til planelog med. Session tager kun EJSON objekter,
-      så jeg må lære at lave det.
-      Desuden skal Session..updatePlantlog nulstilles, når man går ud eller ind på plantlog siden
-      nb: session variabler nulstilles når man reloader siden. 
-      */
-
-    }else{
-      Session.set("updatePlantlog", true);
-      console.log("was false, now " + Session.get("updatePlantlog"));
-    }
-  }
-});
-
-
-Template.update_plantlog.events({
-  "submit .js-new-entry-plantlog": function(event){
-    event.preventDefault();
-    var date = getCheckedText(event.target.plantLogDate);
-    if(date == " I dag"){
-      date = new Date();
-    }
-    else{
-      date = new Date((Number(date.substring(6))+2000), (date.substring(3,5)-1), date.substring(0,2));
-    }
-     var plant_update = event.target.plantUpdate.value;
-     var plant_condition = getCheckedText(event.target.plantCondition);
-     var plantid = this._id;
-
-     console.log("date:" + date );
-     console.log("plant_update: " + plant_update);
-     console.log("plant_condition: " + plant_condition);
-     console.log("plantid: " + plantid);
-     //var entry = []
-     /*her skal lægges ind i databasen et nyt object sidst i tabellen ($push)*/
-     PlantLog.update({_id:plantid}, {$push: { entries: {date: date, plant_update: plant_update, plant_condition: plant_condition}}});
-  }
-});
-
 
 Template.new_plant_log.events({
   "submit .js-new-plant": function(event, template){

@@ -1,0 +1,27 @@
+<template name="navbar">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navHeaderCollapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand js-home-nav {{#if isClicked 1}}active{{/if}}" href="/">ErfaringsPlanten {{#if isClicked 1}}<span class="sr-only">(current)</span>{{/if}}</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navHeaderCollapse" >
+        <ul class="nav navbar-nav">
+          <li class="js-new-plant-nav {{#if isClicked 2}}active{{/if}}"><a href="/new_plant_log"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Plante {{#if isClicked 2}}<span class="sr-only">(current)</span>{{/if}}</a></li>
+        </ul>
+        <div class="nav navbar-right">
+          <div class="navbar-text">
+            {{> loginButtons align="right"}}
+          </div>
+        </div>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</template>
