@@ -21,7 +21,14 @@ Plan:
   Start reusable partial templates with _ and keep them in shared if more than one parent uses it - check
   Keep template specific styles next to the template, targeted specifically to that template using ids and classes. -check
 
-  - file upload (S3 on Amazon?) Et år gratis...
+ - GUI:
+  * plantelogbog
+  * plantedetalje
+  * log entry
+
+  - file upload
+    * (S3 on Amazon?) Et år gratis...
+    * mongodb, for filer under 16 mb
 
   - some kind of geolocation map: leaflet
         - need to implement leaflet geosearch (lookup address from latlng and vice versa)

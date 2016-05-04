@@ -5,7 +5,7 @@ Template.show_plant.onCreated(function(){
 });
 
 
-Template.show_plant2.helpers({
+Template.show_plant_thumbnail.helpers({
   create: function(){
 
   },
@@ -15,9 +15,34 @@ Template.show_plant2.helpers({
   destroyed: function(){
 
   },
+  getDate: function(date){
+    if(date){
+    //  console.log(date);
+      var month = date.getMonth(); // giver en exception når bruger ikke har valgt dato. Det skal gøres obligatorisk at vælge dato.
+      month = month + 1;
+      return date.getDate() + "/" + month + "/" + date.getFullYear();
+    }
+    return undefined;
+  },
+  updatePlantlog: function(){
+    console.log("updatePlantlog function");
+    return Template.instance().openInsertLogEntry.get();
+  },
+  getPlant:function(plantid){
+    return Plants.findOne({_id:plantid})
+  },
+  isEmpty: function(plantid){
+    if(!plantid){
+      return true;
+    }
+    return false;
+  },
+  plants:function(){
+    return Plants.find();
+  }
 });
 
-Template.show_plant2.events({
+Template.show_plant_thumbnail.events({
   "click #foo": function(event, template){
 
   }

@@ -67,8 +67,14 @@
 </template>
 
 <template name="show_logs">
-  {{#each plants}}
-    {{> show_plant}}
-  {{/each}}
-  {{> new_plant}}
+  <div class="row">
+    <div class="col-sm-6 col-md-4">
+      {{#each plants}}
+        {{> show_plant_thumbnail}}
+      {{/each}}
+    </div>
+    <div class="col-sm-6 col-md-4">
+      {{> new_plant}}
+    </div>
+  </div>
 </template>

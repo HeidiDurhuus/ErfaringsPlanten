@@ -21,24 +21,39 @@
   </div>
 </template>
 
-<template name="show_plant2">
+<template name="show_plant_thumbnail">
   <div class="thumbnail">
-    <div class="form-group">
-      <select name="plantName" class="form-control js-plant-selected plantSelector" >
-        {{#each plants}}
-          <option value="{{_id}}">{{name_da}} - lat:{{species}}</option>
-        {{/each}}
-      </select>
+    <div class="caption">
+      {{#if isEmpty plant_id}}
+      <div class="form-group">
+        <select name="plantName" class="form-control js-plant-selected plantSelector" >
+          {{#each plants}}
+            <option value="{{_id}}">{{name_da}} - lat:{{species}}</option>
+          {{/each}}
+        </select>
+      </div>
+      {{else}}
+      {{#with getPlant plant_id}}
+        <p>{{name_da}} <small>{{species}}</small> </p>
+      {{/with}}
+      {{/if}}
     </div>
-  {{#if isSelected}}
     {{#if hasImage}}
       <img src="" alt="" class="plantImageThumb"/>
     {{else}}
       <button id="button" class="plantImageBtn"><span>glyphicon glyphicon-picture</span></button>
     {{/if}}
-    {{#if hasEntry}}
+    <div class="caption">
+    {{#if entries.length}}
       <p>
-        last entry
+        {{#each entries}}
+        <p>
+          {{getDate date}} : {{plant_update}} (vurdering af plantens tilstand: {{plant_condition}})
+        </p>
+        {{/each}}
+      <p>
+        {{getDate planting_date}} : {{planting}} {{planting_place}}
+      </p>
       </p>
     {{/if}}
     <p>
@@ -46,6 +61,6 @@
       <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
       <button id="button"><span class="glyphicon glyphicon-heart"></span></button>
     </p>
-  {{/if}}
+    </div>
   </div>
 </template>

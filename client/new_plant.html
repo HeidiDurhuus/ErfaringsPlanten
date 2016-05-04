@@ -1,5 +1,7 @@
 <template name="new_plant">
   <div class="thumbnail">
+    <div class="caption">
+      
     <div class="form-group">
       <select name="plantName" class="form-control js-plant-selected plantSelector" >
         {{#each plants}}
@@ -7,22 +9,25 @@
         {{/each}}
       </select>
     </div>
+  </div>
   {{#if isSelected}}
     {{#if hasImage}}
       <img src="" alt="" class="plantImageThumb"/>
     {{else}}
       <button id="button" class="plantImageBtn"><span>glyphicon glyphicon-picture</span></button>
     {{/if}}
-    {{#if hasEntry}}
+    <div class="caption">
+      {{#if hasEntry}}
+        <p>
+          last entry
+        </p>
+      {{/if}}
       <p>
-        last entry
+        <button id="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
+        <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button id="button"><span class="glyphicon glyphicon-heart"></span></button>
       </p>
-    {{/if}}
-    <p>
-      <button id="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
-      <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
-      <button id="button"><span class="glyphicon glyphicon-heart"></span></button>
-    </p>
+    </div>
   {{/if}}
   </div>
 </template>
