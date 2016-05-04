@@ -1,0 +1,110 @@
+<template name="new_plant_log">
+  {{#if isSubmitted}}
+    {{#with plant}}
+      {{> show_plant}}
+    {{/with}}
+  {{else}}
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Opret log til ny plante</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form class="js-new-plant">
+        <div class="form-group">
+          <label for="plantName">Plantenavn</label>
+          <select name="plantName" class="form-control">
+            {{#each plants}}
+              <option value="{{_id}}">{{name_da}} - lat:{{species}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="plantingType">Frø / plante</label>
+          <div class="radio">
+            <label for="plantingType"><input type="radio" name="plantingType" > Sået frø</label>
+          </div>
+          <div class="radio">
+            <label for="plantingType"><input type="radio" name="plantingType" > Plantet stikling</label>
+          </div>
+          <div class="radio">
+            <label for="plantingType"><input type="radio" name="plantingType" > Plantet plante</label>
+          </div>
+        </div> <!-- / form group -->
+        <div class="form-group">
+          <label for="plantingDate">Dato</label>
+          <div class="radio">
+            <label for="plantingDate"><input type="radio" name="plantingDate"> I dag</label>
+          </div>
+          <div class="radio">
+            <label for="plantingDate"><input type="radio" name="plantingDate"> anden dag:
+              <input type="text" name="plantingDateOther" aria-label="date" placeholder="dd/mm/åå">
+            </label>
+          </div>
+        </div><!-- / form group -->
+        <div class="form-group">
+          <label for="photo">Foto</label>
+          <input type="file" id="plant_photo" name="plantPhoto">
+          <p class="help-block">upload et billede af frø (inden det er i jorden, sammen med potten/stedet det skal såes i)/ stikling plantet/ plante plantet</p>
+        </div>
+        <div class="form-group">
+          <label for="plantingPlace">Sted</label>
+          <div class="radio">
+            <label for="plantingPlace"><input type="radio" name="plantingPlace"> hjemme i vinduekarm</label>
+          </div>
+          <div class="radio">
+            <label for="plantingPlace"><input type="radio" name="plantingPlace"> hjemme i drivhus</label>
+          </div>
+          <div class="radio">
+            <label for="plantingPlace"><input type="radio" name="plantingPlace"> hjemme i haven</label>
+          </div>
+          <div class="radio">
+            <label for="plantingPlace"><input type="radio" name="plantingPlace"> hjemme på friland</label>
+          </div>
+          <div class="radio">
+            <label for="plantingPlace"><input type="radio" name="plantingPlace" value="0"> andet
+              <input type="text" name="plantingPlaceOther" placeholder="feks hos mormor">
+            </label>
+          </div>
+        </div> <!-- form group -->
+        <div class="form-group">
+          <label for="location">Lokation</label><br/>
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
+            <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>
+            <button type="button" class="btn btn-default js-insert-from-map" name="location">Kort</button>
+          </div>
+          {{#if isClickedAdress}}
+          <div class="form-group">
+            <label for="locationAdressStreet">Gade</label>
+            <input type="text" class="form-control" name="locationAdressStreet" placeholder="Gade">
+            <label for="locationAdressNo">Nr</label>
+            <input type="text" class="form-control" name="locationAdressNo" placeholder="Nr">
+            <label for="locationAdressPostcode">Postnr</label>
+            <input type="text" class="form-control" name="locationAdressPostcode" placeholder="Postnr">
+          </div>
+          {{/if}}
+          {{#if isClickedLatLng}}
+          <div class="form-group">
+            <label for="locationLat">Breddegrad</label>
+            <input type="text" class="form-control" name="locationLat" placeholder="(-90 og 90), højst 14 decimaler, feks 55.52863052257191">
+            <label for="locationLng">Længdegrad</label>
+            <input type="text" class="form-control" name="locationLng" placeholder="(-180 - 180), højst 14 decimaler, feks 9.25048828125">
+          </div>
+          {{/if}}
+          {{#if isClickedMap}}
+            {{> show_map}}
+          {{/if}}
+        </div>
+        <button type="submit" class="btn btn-default">Læg ind</button>
+      </form>
+    </div><!-- /col -->
+  </div><!-- / row -->
+  {{/if}}
+</template>
+<template name="show_map">
+  <div id="map" class="">
+
+  </div>
+</template>

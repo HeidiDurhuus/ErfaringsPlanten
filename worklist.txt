@@ -1,9 +1,9 @@
 Plan:
 * Gerða alt tað, sum eg havi lært higartil:
   - signup -check
-  - meteor methods
+  - meteor methods - check
   - ROUTING -check
-  - publish & subscribe
+  - publish & subscribe - check
   - test-data -check
 
 * bíða við fileupload, til eg havi lært tað á coursera.
@@ -11,3 +11,29 @@ Plan:
 * plantearter kommer fra en af de tre open source plantelister.
   - derefter kan naturplanteskolen o.a vælge fra listen og oprette varer
   - en vare kan være på artsniveau, familie niveau og variant niveau
+
+
+  To do for v1:
+
+  - structure app:
+  Keep template names and file names in sync - check
+  Use iron-router url paths to determine your folder structure - check
+  Start reusable partial templates with _ and keep them in shared if more than one parent uses it - check
+  Keep template specific styles next to the template, targeted specifically to that template using ids and classes. -check
+
+  - file upload (S3 on Amazon?) Et år gratis...
+
+  - some kind of geolocation map: leaflet
+        - need to implement leaflet geosearch (lookup address from latlng and vice versa)
+        https://github.com/smeijer/L.GeoSearch
+        Q: how to import the package into Meteor?
+
+  - plantlist - theplantlist.org (har kontaktet ang licens og brug)
+
+  - Admin ? (first user is admin)
+     - see stat for site
+      - num plants reg
+      - num users reg
+      - see places on map?
+
+  -- v1 is for browser only

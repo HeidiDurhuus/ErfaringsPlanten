@@ -13,7 +13,7 @@ Router.configure({
 // specify the top level route, the page users see when they arrive at the site
 Router.route('/', function () {
   this.render("navbar", {to:"header"});
-  this.render("plant_log", {to:"main"});
+  this.render("home", {to:"main"});
 });
 
 Router.route('/new_plant_log', function () {

@@ -1,6 +1,3 @@
-if(Meteor.isClient){
-
-
 Template.navbar.helpers({
   isClicked: function(num){
       if(Session.get("btn"+num) == 1){
@@ -9,6 +6,14 @@ Template.navbar.helpers({
         return false;
       }
   },
+  signedIn: function(){
+    if(Meteor.userId()){
+      Session.set("userid", Meteor.userId());
+      return true;
+    }else{
+      return false;
+    }
+  }
 });
 
 Template.navbar.events({
@@ -19,6 +24,9 @@ Template.navbar.events({
   "click .js-new-plant-nav": function(event, template){
      Session.set("btn1", 0);
      Session.set("btn2", 1);
+
+     //don't know if its the best place to solve this logic
+     Session.set("isSubmitted", false);
   }
   /*,
   "click .js-about": function(event, template){
@@ -57,4 +65,3 @@ Accounts.ui.config({
   }
   ]
 });
-}
