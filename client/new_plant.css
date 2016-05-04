@@ -1,0 +1,11 @@
+.plantSelector{
+  max-width: 200px;
+}
+.plantImageBtn{
+  width: 200px;
+  height: 200px;
+}
+.plantImageThumb{
+  max-height: 200px;
+  max-width: 200px;
+}
