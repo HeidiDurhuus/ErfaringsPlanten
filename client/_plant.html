@@ -20,3 +20,32 @@
     </div>
   </div>
 </template>
+
+<template name="show_plant2">
+  <div class="thumbnail">
+    <div class="form-group">
+      <select name="plantName" class="form-control js-plant-selected plantSelector" >
+        {{#each plants}}
+          <option value="{{_id}}">{{name_da}} - lat:{{species}}</option>
+        {{/each}}
+      </select>
+    </div>
+  {{#if isSelected}}
+    {{#if hasImage}}
+      <img src="" alt="" class="plantImageThumb"/>
+    {{else}}
+      <button id="button" class="plantImageBtn"><span>glyphicon glyphicon-picture</span></button>
+    {{/if}}
+    {{#if hasEntry}}
+      <p>
+        last entry
+      </p>
+    {{/if}}
+    <p>
+      <button id="button"><span class="glyphicon glyphicon-plus-sign"></span></button>
+      <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
+      <button id="button"><span class="glyphicon glyphicon-heart"></span></button>
+    </p>
+  {{/if}}
+  </div>
+</template>

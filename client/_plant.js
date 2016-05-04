@@ -5,16 +5,25 @@ Template.show_plant.onCreated(function(){
 });
 
 
-Template.show_plant.helpers({
+Template.show_plant2.helpers({
   create: function(){
-    console.log("show_plant created");
+
   },
   rendered: function(){
-    console.log("show_plant rendered");
+
   },
   destroyed: function(){
-    console.log("show_plant destroyed");
+
   },
+});
+
+Template.show_plant2.events({
+  "click #foo": function(event, template){
+
+  }
+});
+
+Template.show_plant.helpers({
   getDate: function(date){
     if(date){
     //  console.log(date);

@@ -9,6 +9,9 @@ Template.new_plant.helpers({
   hasImage: function(){
     return false;
   },
+  hasEntry: function(){
+    return false;
+  },
   create: function(){
 
   },
