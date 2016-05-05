@@ -8,6 +8,7 @@ Meteor.publish("plants", function(){
 });
 
 Meteor.methods({
+/*
   insertNewPlantLog:function(newPlant){
     var ins = PlantLog.insert({
       user_id: newPlant.user_id,
@@ -21,4 +22,13 @@ Meteor.methods({
     });
     return ins;
   }
+*/
+  insertNewPlantLog:function(plant_id){
+    var ins = PlantLog.insert({
+      user_id: this.userId, //newPlant.user_id,
+      plant_id: plant_id
+    });
+    return ins;
+  }
+
 });

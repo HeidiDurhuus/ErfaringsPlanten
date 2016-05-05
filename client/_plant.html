@@ -22,21 +22,11 @@
 </template>
 
 <template name="show_plant_thumbnail">
-  <div class="thumbnail">
+  <div class="thumbnail" id="{{_id}}">
     <div class="caption">
-      {{#if isEmpty plant_id}}
-      <div class="form-group">
-        <select name="plantName" class="form-control js-plant-selected plantSelector" >
-          {{#each plants}}
-            <option value="{{_id}}">{{name_da}} - lat:{{species}}</option>
-          {{/each}}
-        </select>
-      </div>
-      {{else}}
       {{#with getPlant plant_id}}
         <p>{{name_da}} <br/><small>{{species}}</small> </p>
       {{/with}}
-      {{/if}}
     </div>
     {{#if hasImage}}
       <img src="" alt="" class="plantImageThumb"/>
@@ -57,9 +47,9 @@
       </p>
     {{/if}}
     <p>
-      <button id="button"><span class="glyphicon glyphicon-eye-open"></span></button>
-      <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
-      <button id="button"><span class="glyphicon glyphicon-share"></span></button>
+      <button id="btnEyeOpen" data-id="{{_id}}"><span class="glyphicon glyphicon-eye-open"></span></button>
+      <button id="btnPencil" data-id="{{_id}}"><span class="glyphicon glyphicon-pencil"></span></button>
+      <button id="btnShare" data-id="{{plant_id}}"><span class="glyphicon glyphicon-share"></span></button>
     </p>
     </div>
   </div>

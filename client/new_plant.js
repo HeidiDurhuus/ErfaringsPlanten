@@ -43,6 +43,20 @@ Template.new_plant.helpers({
 
 Template.new_plant.events({
   "change .js-plant-selected": function(event, template){
+
+    var plant_id = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+
+    console.log(plant_id);
+
+    Meteor.call("insertNewPlantLog", plant_id, function(error, result){
+      if(error){
+        console.log("error", error);
+      }
+      if(result){
+        console.log("result: " + result);
+      }
+    });
+
     Session.set("isSelected", true);
   }
 });
