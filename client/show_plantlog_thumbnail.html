@@ -23,15 +23,15 @@
 </template>
 -->
 <template name="show_plantlog_thumbnail">
-  <div class="thumbnail" id="{{_id}}">
+  <div class="thumbnail">
     <div class="caption">
       {{#with getPlant plant_id}}
         <p>{{name_da}} <br/><small>{{species}}</small> </p>
       {{/with}}
     </div>
     {{#if hasImage}}
-    has image
       <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+      <!-- her skal noget med at checke om der findes et billede i entries, og så hente sidste billede fra entries-->
     {{else}}
     <form class="js-upload-image" id="{{_id}}">
       <label for="fileupload" class="btn btn-default plant-image-btn custom-file-upload">
@@ -39,8 +39,6 @@
         <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
       </label>
     </form>
-<!--      <button id="button" class="btn btn-default plant-image-btn"><span class="glyphicon glyphicon-picture"></span></button>
--->
     {{/if}}
     <div class="caption">
     {{#if entries.length}}
@@ -56,6 +54,7 @@
       </p>
     {{/if}}
     <p>
+      <a href="/plantlog_details/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
       <button id="btnEyeOpen" data-id="{{_id}}" class="btn btn-default js-open-eye"><span class="glyphicon glyphicon-eye-open"></span></button>
       <button id="btnPencil" data-id="{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
       <button id="btnShare" data-id="{{plant_id}}" class="btn btn-default"><span class="glyphicon glyphicon-share"></span></button>

@@ -3,17 +3,24 @@
     <div class="caption">
 
     <div class="form-group">
-      <select name="plantName" class="form-control js-plant-selected plantSelector" >
+      <select name="plantName" class="form-control js-plant-selected plant-selector" >
         {{#each plants}}
           <option value="{{_id}}" data-id="{{_id}}">{{name_da}} - lat:{{species}}</option>
         {{/each}}
       </select>
     </div>
   </div>
+<!--
   {{#if isSelected}}
     {{#if hasImage}}
-      <img src="" alt="" class="plantImageThumb"/>
+      <img src="" alt="" class="plant-image-thumb"/>
     {{else}}
+
+    <label class="custom-file-upload">
+        <input type="file"/>
+        <i class="fa fa-cloud-upload"></i> Custom Upload
+    </label>
+
       <button id="button" class="plantImageBtn"><span class="glyphicon glyphicon-picture"></span></button>
     {{/if}}
     <div class="caption">
@@ -29,5 +36,6 @@
       </p>
     </div>
   {{/if}}
+-->
   </div>
 </template>

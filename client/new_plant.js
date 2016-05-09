@@ -58,5 +58,8 @@ Template.new_plant.events({
     });
 
     Session.set("isSelected", true);
+  },
+  "change .js-upload-image": function(event, template){
+    console.log("clicked");
   }
 });

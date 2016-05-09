@@ -30,8 +30,12 @@ Meteor.methods({
     });
     return ins;
   },
-  saveFile: function(buffer, plant_log_id){
-    PlantLog.update({_id: plant_log_id}, {$set: {image: buffer}});
+  saveFile: function(buffer, plantlog_id){
+    PlantLog.update({_id: plantlog_id}, {$set: {image: buffer}});
+  },
+  updatePlantlog: function(plantlog_id, query){
+    var upd = PlantLog.update({_id: plantlog_id}, {$set: query});
+    return upd;    
   }
 
 });

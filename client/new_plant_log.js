@@ -26,7 +26,7 @@ Template.new_plant_log.helpers({
   }
 
 });
-Template.show_map.rendered = function(){
+Template.show_map2.rendered = function(){
   var maxZoom = 18;
   var marker = null;
   var latlng = null;

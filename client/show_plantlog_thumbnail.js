@@ -15,12 +15,13 @@ Template.show_plantlog_thumbnail.helpers({
       return true;
     }
     return false;
-  },
+  }
+  /*,
   plants:function(){
     return Plants.find();
-  },
+  }*/,
   hasImage:function(){
-    console.log(this);
+    //console.log(this);
 
     if(!this.image){
       return false;
@@ -45,9 +46,6 @@ Template.show_plantlog_thumbnail.events({
       Meteor.call("saveFile", dataUrl, id);
     }
     fileReader.readAsDataURL(file);
-  },
-  "click .js-open-eye": function(){
-    console.log("eye");
   }
 });
 

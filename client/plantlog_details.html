@@ -1,0 +1,111 @@
+<template name="plantlog_details">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="/"><span class="glyphicon glyphicon-arrow-left"></span> tilbage</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      {{#with getPlant plantlog.plant_id}}
+        <p>{{name_da}} <br/><small>{{species}}</small> </p>
+      {{/with}}
+
+      <img src="{{plantlog.image}}" alt="" class="img-rounded plant-image-thumb"/>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-12">
+          {{> planting_type id=plantlog._id}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{> planting_date}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          {{> planting_place}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          {{> planting_location}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="planting_type">
+  <label for="plantingType">Frø / plante
+    <span class="glyphicon glyphicon-grain"></span></label>
+    <select name="plantingType" class="js-insert-plantingtype" >
+      <option value=""> - vælg - </option>
+      <option value="Sået frø">Sået frø</option>
+      <option value="Plantet stikling">Plantet stikling</option>
+      <option value="Plantet plante">Plantet plante</option>
+    </select>
+</template>
+
+<template name="planting_date">
+  <label for="plantingDate">Dato <span class="glyphicon glyphicon-calendar"></span></label>
+  <div class="radio">
+    <label for="plantingDate"><input type="radio" name="plantingDate"> I dag</label>
+  </div>
+  <div class="radio">
+    <label for="plantingDate"><input type="radio" name="plantingDate"> anden dag:
+      <input type="text" name="plantingDateOther" aria-label="date" placeholder="dd/mm/åå">
+    </label>
+  </div>
+</template>
+
+<template name="planting_place">
+  <div class="form-group">
+    <label for="plantingPlace">Sted</label>
+    <select name="plantingPlace" >
+      <option value="vinduekarm">vinduekarm</option>
+      <option value="drivhus">drivhus</option>
+      <option value="haven">haven</option>
+      <option value="haven">friland</option>
+    </select>
+  </div> <!-- / form group -->
+</template>
+
+<template name="planting_location">
+  <div class="form-group">
+    <label for="location">Lokation</label><br/>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
+      <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>
+      <button type="button" class="btn btn-default js-insert-from-map" name="location">Kort</button>
+    </div>
+    {{#if isClickedAdress}}
+    <div class="form-group">
+      <label for="locationAdressStreet">Gade</label>
+      <input type="text" class="form-control" name="locationAdressStreet" placeholder="Gade">
+      <label for="locationAdressNo">Nr</label>
+      <input type="text" class="form-control" name="locationAdressNo" placeholder="Nr">
+      <label for="locationAdressPostcode">Postnr</label>
+      <input type="text" class="form-control" name="locationAdressPostcode" placeholder="Postnr">
+    </div>
+    {{/if}}
+    {{#if isClickedLatLng}}
+    <div class="form-group">
+      <label for="locationLat">Breddegrad</label>
+      <input type="text" class="form-control" name="locationLat" placeholder="(-90 og 90), højst 14 decimaler, feks 55.52863052257191">
+      <label for="locationLng">Længdegrad</label>
+      <input type="text" class="form-control" name="locationLng" placeholder="(-180 - 180), højst 14 decimaler, feks 9.25048828125">
+    </div>
+    {{/if}}
+    {{#if isClickedMap}}
+      {{> show_map}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="show_map">
+  <div id="map" class="">
+
+  </div>
+</template>
