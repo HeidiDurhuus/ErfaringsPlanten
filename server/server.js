@@ -29,6 +29,9 @@ Meteor.methods({
       plant_id: plant_id
     });
     return ins;
+  },
+  saveFile: function(buffer, plant_log_id){
+    PlantLog.update({_id: plant_log_id}, {$set: {image: buffer}});
   }
 
 });
