@@ -6,7 +6,7 @@ Plan:
   - publish & subscribe - check
   - test-data -check
 
-* bíða við fileupload, til eg havi lært tað á coursera.
+* bíða við fileupload, til eg havi lært tað á coursera. - check
 
 * plantearter kommer fra en af de tre open source plantelister.
   - derefter kan naturplanteskolen o.a vælge fra listen og oprette varer
@@ -22,20 +22,24 @@ Plan:
   Keep template specific styles next to the template, targeted specifically to that template using ids and classes. -check
 
  - GUI:
-  * plantelogbog
-  * plantedetalje
-  * log entry
+  * plantelogbog - check
+  * plantedetalje (don't know how it should layout)
+  * log entry (don't know how it should layout)
+  * do template for edit-field, saved-field, empty-field
+  * autocompletion field
+  * datepicker field
 
   - file upload
     * (S3 on Amazon?) Et år gratis...
-    * mongodb, for filer under 16 mb
+    * mongodb, for filer under 16 mb - check (er langsomt, så skift når produktion)
 
   - some kind of geolocation map: leaflet
         - need to implement leaflet geosearch (lookup address from latlng and vice versa)
         https://github.com/smeijer/L.GeoSearch
         Q: how to import the package into Meteor?
+        - marker image is missing... fix bug
 
-  - plantlist - theplantlist.org (har kontaktet ang licens og brug)
+  - plantlist - theplantlist.org (har kontaktet ang licens og brug 29.apr og har ikke svaret 10.maj) haven't answered for more than a week. Go for
 
   - Admin ? (first user is admin)
      - see stat for site

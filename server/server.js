@@ -35,7 +35,7 @@ Meteor.methods({
   },
   updatePlantlog: function(plantlog_id, query){
     var upd = PlantLog.update({_id: plantlog_id}, {$set: query});
-    return upd;    
+    return upd;
   }
 
 });

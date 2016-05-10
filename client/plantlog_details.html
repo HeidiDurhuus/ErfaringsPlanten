@@ -7,12 +7,23 @@
   <div class="row">
     <div class="col-md-6">
       {{#with getPlant plantlog.plant_id}}
-        <p>{{name_da}} <br/><small>{{species}}</small> </p>
+        <p>{{da}} <br/><small>{{lat}}</small> </p>
       {{/with}}
 
       <img src="{{plantlog.image}}" alt="" class="img-rounded plant-image-thumb"/>
     </div>
     <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {{> planting_type id=plantlog._id}}
+          {{> planting_date id=plantlog._id}}
+          {{> planting_place id=plantlog._id}}
+          {{> planting_location id=plantlog._id}}
+        </div>
+        <div class="panel-footer">
+
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           {{> planting_type id=plantlog._id}}
@@ -20,17 +31,17 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          {{> planting_date}}
+          {{> planting_date id=plantlog._id}}
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
-          {{> planting_place}}
+          {{> planting_place id=plantlog._id}}
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          {{> planting_location}}
+          {{> planting_location id=plantlog._id}}
         </div>
       </div>
     </div>
@@ -62,8 +73,10 @@
 
 <template name="planting_place">
   <div class="form-group">
-    <label for="plantingPlace">Sted</label>
-    <select name="plantingPlace" >
+    <label for="plantingPlace">Sted
+    <span class="glyphicon glyphicon-home"></span></label>
+    <select name="plantingPlace" class="js-insert-plantingplace">
+      <option value=""> - vælg - </option>
       <option value="vinduekarm">vinduekarm</option>
       <option value="drivhus">drivhus</option>
       <option value="haven">haven</option>
@@ -74,7 +87,8 @@
 
 <template name="planting_location">
   <div class="form-group">
-    <label for="location">Lokation</label><br/>
+    <label for="location">Lokation
+    <span class="glyphicon glyphicon-globe"></span></label><br/>
     <div class="btn-group" role="group" aria-label="...">
       <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
       <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>

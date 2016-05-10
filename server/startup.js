@@ -8,6 +8,44 @@ Meteor.startup(function () {
     }
   }
   if(!Plants.findOne()){
+
+/*
+      Virker ikke helt. nogle lat navne er endt i da, og nogle lat er tomme...
+*/
+
+
+    var textfile = Assets.getText('plantlist.txt');
+    var lines = textfile.split("\n");
+    //hvis har ...
+    //tag det som er før ... og det som er efter ... trim
+
+    var lat, da;
+
+    //for(var i = 0; i < lines.length; i++){  Change to this when autocomplete works!!
+
+    for(var i = 0; i < 20; i++){
+      var line = lines[i];
+      lat = line.substring(0, line.indexOf("..."));
+      da = line.substring((line.lastIndexOf("...")+3), line.length).trim();
+
+      Plants.insert({
+        lat: lat,
+        da: da
+      });
+/*
+      cleaned.push(
+        {
+          lat: lat,
+          da: da
+        }
+      );
+*/
+    }
+    Plants.insert(cleaned);
+    console.log("inserted " + cleaned.length + " plantnames");
+  }
+/*
+  if(!Plants.findOne()){
     console.log("inserting plants ");
     Plants.insert({
       name_da: "Sankthansurt",
@@ -46,4 +84,5 @@ Meteor.startup(function () {
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Hemerocallis_thunbergii_034.jpg/640px-Hemerocallis_thunbergii_034.jpg"
     });
   }
+  */
 });

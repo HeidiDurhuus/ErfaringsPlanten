@@ -53,15 +53,6 @@ Template.planting_type.events({
 
 
 Template.planting_date.helpers({
-  create: function(){
-
-  },
-  rendered: function(){
-
-  },
-  destroyed: function(){
-
-  },
 });
 
 Template.planting_date.events({
@@ -72,20 +63,18 @@ Template.planting_date.events({
 
 
 Template.planting_place.helpers({
-  create: function(){
-
-  },
-  rendered: function(){
-
-  },
-  destroyed: function(){
-
-  },
 });
 
 Template.planting_place.events({
-  "click #foo": function(event, template){
-
+  "change .js-insert-plantingplace": function(event, template){
+    var field = "planting_place";
+    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+    var plantlog_id = this.id;
+    if(value != ""){
+      var query = {};
+      query[field] = value;
+      Meteor.call("updatePlantlog", plantlog_id, query);
+    }
   }
 });
 
