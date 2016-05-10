@@ -1,13 +1,20 @@
 <template name="new_plant">
   <div class="thumbnail">
     <div class="caption">
-
+<!--
     <div class="form-group">
       <select name="plantName" class="form-control js-plant-selected plant-selector" >
         {{#each plants}}
           <option value="{{_id}}" data-id="{{_id}}">{{da}} - lat:{{lat}}</option>
         {{/each}}
       </select>
+    </div>
+-->
+    <div class="input-group">
+      <input type="text" class="form-control" name="plant_autocomplete" id="searchbox" data-id="{{_id}}">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default js-select-plant" ><span class="glyphicon glyphicon-circle-arrow-right"></span></button>
+      </span>
     </div>
   </div>
 <!--

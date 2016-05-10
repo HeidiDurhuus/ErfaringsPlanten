@@ -17,6 +17,11 @@
  Is it possible and plausible to merge show_plant and new_plant?
  Must somehow pass a variable to the template to fire a "has no plant selected" - check if cursor is empty??
 */
+Template.new_plant.rendered = function(){
+//  AutoCompletion.init("input#searchbox");
+  AutoCompletion.init("input#searchbox");
+}
+
 Template.new_plant.helpers({
   plants:function(){
     return Plants.find();
@@ -30,18 +35,10 @@ Template.new_plant.helpers({
   hasEntry: function(){
     return false;
   },
-  create: function(){
-
-  },
-  rendered: function(){
-
-  },
-  destroyed: function(){
-
-  },
 });
 
 Template.new_plant.events({
+  /*
   "change .js-plant-selected": function(event, template){
 
     var plant_id = event.currentTarget.options[event.currentTarget.selectedIndex].value;
@@ -58,8 +55,37 @@ Template.new_plant.events({
     });
 
     Session.set("isSelected", true);
+  },*/
+  "keyup input#searchbox": function(){
+    AutoCompletion.autocomplete({
+      element: 'input#searchbox',
+      collection: Plants,
+      field: 'da',
+      limit: 8,
+      sort: {da: 1}
+    });
   },
-  "change .js-upload-image": function(event, template){
-    console.log("clicked");
+  "click .js-select-plant": function(event){
+    event.preventDefault();
+    //var plant_id = document.getElementById("searchbox").
+      console.log(document.getElementById("searchbox").value);
+      var string = document.getElementById("searchbox").value
+      var plant_id = Plants.findOne({da:string})._id;
+
+      Meteor.call("insertNewPlantLog", plant_id, function(error, result){
+        if(error){
+          console.log("error", error);
+        }
+        if(result){
+          console.log("result: " + result);
+        }
+      });
+
+  },
+  "change input#searchbox": function(){
+    console.log("change");
+  },
+  "click input#searchbox": function(){
+    console.log("click");
   }
 });
