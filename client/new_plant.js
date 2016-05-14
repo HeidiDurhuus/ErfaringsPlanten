@@ -68,7 +68,7 @@ Template.new_plant.events({
   "click .js-select-plant": function(event){
     event.preventDefault();
     //var plant_id = document.getElementById("searchbox").
-      console.log(document.getElementById("searchbox").value);
+//      console.log(document.getElementById("searchbox").value);
       var string = document.getElementById("searchbox").value
       var plant_id = Plants.findOne({da:string})._id;
 
@@ -77,15 +77,17 @@ Template.new_plant.events({
           console.log("error", error);
         }
         if(result){
-          console.log("result: " + result);
+          //console.log("result: " + result);
         }
       });
-
+      document.getElementById("searchbox").value = "";
   },
+/*
   "change input#searchbox": function(){
     console.log("change");
   },
   "click input#searchbox": function(){
     console.log("click");
   }
+  */
 });

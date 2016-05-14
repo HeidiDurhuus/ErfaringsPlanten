@@ -1,3 +1,6 @@
+.margin{
+  margin-top: 10px;
+}
 .plant-image-btn{
   width: 200px;
   height: 200px;
@@ -6,11 +9,7 @@
   max-height: 200px;
   max-width: 200px;
 }
-.thumbnail{
-  width: 242px;
-  text-align: center;
-}
-#fileupload {
+#entryFileupload {
     display: none;
 }
 .custom-file-upload {

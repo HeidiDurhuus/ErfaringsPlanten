@@ -6,14 +6,6 @@ Template.plantlog_details.helpers({
   plantlog: function(){
     return PlantLog.findOne({_id:Session.get("details_id")});
   },
-  create: function(){
-  },
-  rendered: function(){
-
-  },
-  destroyed: function(){
-
-  },
 });
 
 Template.plantlog_details.events({
@@ -51,13 +43,27 @@ Template.planting_type.events({
   }
 });
 
-
+Template.planting_date.rendered = function(){
+  $("#datepicker").datepicker();
+}
 Template.planting_date.helpers({
 });
 
 Template.planting_date.events({
-  "change ": function(event, template){
-
+  "change #datepicker": function(event, template){
+/*
+    console.log(event);
+    console.log(template);
+    console.log(document.getElementById("datepicker").value);
+  */
+    var field = "planting_date";
+    var value = document.getElementById("datepicker").value
+    var plantlog_id = this.id;
+    if(value != ""){
+      var query = {};
+      query[field] = value;
+      Meteor.call("updatePlantlog", plantlog_id, query);
+    }
   }
 });
 

@@ -30,7 +30,7 @@ Plan:
   * datepicker field
 
   - file upload
-    * (S3 on Amazon?) Et år gratis...
+    * (S3 on Amazon?) Et år gratis... cloudinary.com gratis 75.000 images og håndterer rotation
     * mongodb, for filer under 16 mb - check (er langsomt, så skift når produktion)
 
   - some kind of geolocation map: leaflet

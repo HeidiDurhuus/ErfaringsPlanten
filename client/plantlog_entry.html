@@ -1,0 +1,233 @@
+<template name="new_plantlog_entry">
+  <form id="saveEntry">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <label for="plantUpdate">Hvordan har planten det? eller er der andet nyt?</label>
+    </div>
+    <div class="panel-body">
+      <!--
+      <input class="form-control" id="plantUpdate" name="plantUpdate" placeholder="Planten er nu 20 cm høj og pottet om til højbed med jordkontakt i haven">
+      -->
+      <button id="btnText" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> text</button>
+      <button id="btnImage" class="btn btn-default"><span class="glyphicon glyphicon-picture"></span> billede</button>
+      <button id="btnScore" class="btn btn-default"><span class="glyphicon glyphicon-leaf"></span> score</button>
+      <button id="btnSoilmoist" class="btn btn-default"><span class="glyphicon glyphicon-tint"></span> jordfugt</button>
+
+    {{#if isEdited}}
+
+      <div class="row">
+        <div class="col-md-2 margin">
+          <input type="text" id="txtDate" value="{{today}}" disabled="true">
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              {{#if clickedText}}
+              <span class="glyphicon glyphicon-pencil"></span>
+                <input type="text" id="plantUpdate" class="form-control" placeholder="Planten er nu 20 cm høj og pottet om til højbed med jordkontakt i haven">
+              {{/if}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 margin">
+              {{#if clickedScore}}
+              <span class="glyphicon glyphicon-leaf"></span> {{> new_plantlog_entry_score}}
+              {{/if}}
+            </div>
+            <div class="col-md-6 margin">
+              {{#if clickedSoilMoist}}
+              <span class="glyphicon glyphicon-tint"></span> {{> new_plantlog_entry_soilmoist}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          {{#if clickedImage}}
+            {{#if hasImage}}
+              <img class="plant-image-thumb" src="{{image}}" alt="" />
+            {{else}}
+              <label for="entryFileupload" id="selectImage" class="btn btn-default plant-image-btn custom-file-upload" accept="image/*">
+                <input type="file" id="entryFileupload" />
+                <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
+              </label>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    {{/if}}
+    </div>
+    <div class="panel-footer">
+      <button type="submit" id="btnSave" data-id="{{plant_id}}" class="btn btn-default"><span class="glyphicon glyphicon-saved"></span></button>
+    </div>
+  </div>
+</form>
+</template>
+
+<template name="new_plantlog_entry_score">
+  <div class="form-group">
+    <div class="btn-group" role="group" aria-label="...">
+      <span class="glyphicon glyphicon-minus"></span>
+    <div class="radio-inline">
+      <label for="plantCondition"><input type="radio" name="plantCondition"> 1 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="plantCondition"><input type="radio" name="plantCondition"> 2 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="plantCondition"><input type="radio" name="plantCondition"> 3 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="plantCondition"><input type="radio" name="plantCondition"> 4 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="plantCondition"><input type="radio" name="plantCondition"> 5 </label>
+    </div>
+    <span class="glyphicon glyphicon-plus"></span>
+  </div>
+  </div> <!-- form group -->
+</template>
+
+<template name="new_plantlog_entry_soilmoist">
+  <div class="form-group">
+    <div class="btn-group" role="group" aria-label="...">
+      tørt<span class="glyphicon glyphicon-minus"></span>
+    <div class="radio-inline">
+      <label for="soilMoist"><input type="radio" name="soilMoist"> 1 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="soilMoist"><input type="radio" name="soilMoist"> 2 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="soilMoist"><input type="radio" name="soilMoist"> 3 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="soilMoist"><input type="radio" name="soilMoist"> 4 </label>
+    </div>
+    <div class="radio-inline">
+      <label for="soilMoist"><input type="radio" name="soilMoist"> 5 </label>
+    </div>
+    <span class="glyphicon glyphicon-plus"></span>vådt
+  </div>
+  </div> <!-- form group -->
+</template>
+
+<template name="plantlog_entry">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-2">
+          11/05/2016
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              planten vokser ...
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 margin">
+              <span class="glyphicon glyphicon-leaf"></span> plantescore: 5
+            </div>
+            <div class="col-md-6 margin">
+              <span class="glyphicon glyphicon-tint"></span> jordfugtighed: 7
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <img src="http://www.kolibrikerteszet.hu/files/Kepek/rosa/Rosa%20Rugosa.jpg" alt="" class="img-rounded plant-image-thumb"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!--
+<template name="plantlog_entry2">
+<div class="row">
+  <div class="col-md-2">
+    11/05/2016:
+  </div>
+  <div class="col-md-7">
+    <form class="js-new-entry-plantlog">
+      <div class="form-group">
+        <label for="plantUpdate">Hvordan har planten det? eller er der andet nyt?</label>
+        <input class="form-control" name="plantUpdate" placeholder="Planten er nu 20 cm høj og pottet om til højbed med jordkontakt i haven">
+      </div>
+      <div class="form-group">
+        <label for="soilMoist">Hvordan har planten det?</label>
+        <br/>
+        <div class="btn-group" role="group" aria-label="...">
+          <span class="glyphicon glyphicon-plus"></span>
+        <div class="radio-inline">
+          <label for="plantCondition"><input type="radio" name="plantCondition"> 1 </label>
+        </div>
+        <div class="radio-inline">
+          <label for="plantCondition"><input type="radio" name="plantCondition"> 2 </label>
+        </div>
+        <div class="radio-inline">
+          <label for="plantCondition"><input type="radio" name="plantCondition"> 3 </label>
+        </div>
+        <div class="radio-inline">
+          <label for="plantCondition"><input type="radio" name="plantCondition"> 4 </label>
+        </div>
+        <div class="radio-inline">
+          <label for="plantCondition"><input type="radio" name="plantCondition"> 5 </label>
+        </div>
+        <span class="glyphicon glyphicon-minus"></span>
+      </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <form class="js-upload-image" >
+      <label for="fileupload" id="{{_id}}" class="btn btn-default plant-image-btn custom-file-upload js-register-click">
+        <input type="file" id="fileupload" />
+        <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
+      </label>
+    </form>
+  </div>
+</div>
+</template>
+
+-->
+<!--
+<template name="plantlog_entry">
+  <form class="js-new-entry-plantlog">
+    <div class="form-group">
+      <label for="plantUpdate">Hvordan har planten det? eller er der andet nyt?</label>
+      <input class="form-control" name="plantUpdate" placeholder="Planten er nu 20 cm høj og pottet om til højbed med jordkontakt i haven">
+    </div>
+    <div class="form-group">
+      <label for="plantCondition">Hvordan har planten det?</label>
+      <br/>
+      <div class="btn-group" role="group" aria-label="...">
+        <span class="glyphicon glyphicon-plus"></span>
+      <div class="radio-inline">
+        <label for="plantCondition"><input type="radio" name="plantCondition"> 1 </label>
+      </div>
+      <div class="radio-inline">
+        <label for="plantCondition"><input type="radio" name="plantCondition"> 2 </label>
+      </div>
+      <div class="radio-inline">
+        <label for="plantCondition"><input type="radio" name="plantCondition"> 3 </label>
+      </div>
+      <div class="radio-inline">
+        <label for="plantCondition"><input type="radio" name="plantCondition"> 4 </label>
+      </div>
+      <div class="radio-inline">
+        <label for="plantCondition"><input type="radio" name="plantCondition"> 5 </label>
+      </div>
+      <span class="glyphicon glyphicon-minus"></span>
+    </div>
+    </div>
+    <form class="js-upload-image" >
+      <label for="fileupload" id="{{_id}}" class="btn btn-default plant-image-btn custom-file-upload js-register-click">
+        <input type="file" id="fileupload" />
+        <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
+      </label>
+    </form>
+    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-upload"></span></button>
+  </form>
+</template>
+
+-->

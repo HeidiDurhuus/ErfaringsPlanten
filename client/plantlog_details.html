@@ -6,51 +6,44 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      {{#with getPlant plantlog.plant_id}}
-        <p>{{da}} <br/><small>{{lat}}</small> </p>
-      {{/with}}
+      <div class="panel panel-default">
+        <div class="panel-body text-center">
+          {{#with getPlant plantlog.plant_id}}
+            <p><b>{{da}} </b><br/><small>{{lat}}</small> </p>
+          {{/with}}
 
-      <img src="{{plantlog.image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <img src="{{plantlog.image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body">
+          <p><span class="glyphicon glyphicon-eye-open"></span></p>
           {{> planting_type id=plantlog._id}}
           {{> planting_date id=plantlog._id}}
           {{> planting_place id=plantlog._id}}
-          {{> planting_location id=plantlog._id}}
-        </div>
-        <div class="panel-footer">
-
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          {{> planting_type id=plantlog._id}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          {{> planting_date id=plantlog._id}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          {{> planting_place id=plantlog._id}}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
           {{> planting_location id=plantlog._id}}
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+            {{> new_plantlog_entry id=plantlog._id}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        {{> plantlog_entry id=plantlog._id}}
+    </div>
+  </div>
 </template>
 
 <template name="planting_type">
-  <label for="plantingType">Frø / plante
-    <span class="glyphicon glyphicon-grain"></span></label>
+  <label for="plantingType">
+    <span class="glyphicon glyphicon-grain"></span></label> Frø / plante
     <select name="plantingType" class="js-insert-plantingtype" >
       <option value=""> - vælg - </option>
       <option value="Sået frø">Sået frø</option>
@@ -60,7 +53,9 @@
 </template>
 
 <template name="planting_date">
-  <label for="plantingDate">Dato <span class="glyphicon glyphicon-calendar"></span></label>
+  <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> Dato
+  <input name="plantingDate" type="text" id="datepicker">
+  <!--
   <div class="radio">
     <label for="plantingDate"><input type="radio" name="plantingDate"> I dag</label>
   </div>
@@ -69,12 +64,13 @@
       <input type="text" name="plantingDateOther" aria-label="date" placeholder="dd/mm/åå">
     </label>
   </div>
+-->
 </template>
 
 <template name="planting_place">
   <div class="form-group">
-    <label for="plantingPlace">Sted
-    <span class="glyphicon glyphicon-home"></span></label>
+    <label for="plantingPlace">
+    <span class="glyphicon glyphicon-home"></span></label> Sted
     <select name="plantingPlace" class="js-insert-plantingplace">
       <option value=""> - vælg - </option>
       <option value="vinduekarm">vinduekarm</option>
@@ -87,8 +83,8 @@
 
 <template name="planting_location">
   <div class="form-group">
-    <label for="location">Lokation
-    <span class="glyphicon glyphicon-globe"></span></label><br/>
+    <label for="location">
+    <span class="glyphicon glyphicon-globe"></span></label> Lokation<br/>
     <div class="btn-group" role="group" aria-label="...">
       <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
       <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>

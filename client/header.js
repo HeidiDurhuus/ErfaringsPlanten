@@ -21,13 +21,17 @@ Template.navbar.events({
      Session.set("btn1", 1);
      Session.set("btn2", 0);
   },
-  "click .js-new-plant-nav": function(event, template){
+  "click .js-faq": function(event, template){
      Session.set("btn1", 0);
      Session.set("btn2", 1);
-
-     //don't know if its the best place to solve this logic
-     Session.set("isSubmitted", false);
+     Session.set("btn3", 0);
+  },
+  "click .js-about-nav": function(event, template){
+     Session.set("btn1", 0);
+     Session.set("btn2", 0);
+     Session.set("btn3", 1);
   }
+
   /*,
   "click .js-about": function(event, template){
     Session.set("btn1", 0);

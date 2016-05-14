@@ -23,4 +23,5 @@ standard-minifier-css
 standard-minifier-js
 reactive-var
 bevanhunt:leaflet
-sebdah:autocompletion
+sebdah:autocompletion   
+mizzao:jquery-ui        #for datepicker

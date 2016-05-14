@@ -13,11 +13,21 @@ Router.route('/', function () {
   this.render("home", {to:"main"});
 });
 
+Router.route('/faq', function () {
+  this.render("navbar", {to:"header"});
+  this.render("faq", {to:"main"});
+});
+Router.route('/about', function () {
+  this.render("navbar", {to:"header"});
+  this.render("about", {to:"main"});
+});
+
+/*
 Router.route('/new_plant_log', function () {
   this.render("navbar", {to:"header"});
   this.render("new_plant_log", {to:"main"});
 });
-
+*/
 Router.route('/plantlog_details/:_id', function(){
   Session.set("details_id", this.params._id);
   this.render("navbar", {to:"header"});
