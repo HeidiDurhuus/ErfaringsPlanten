@@ -37,7 +37,7 @@ Plan:
         - need to implement leaflet geosearch (lookup address from latlng and vice versa)
         https://github.com/smeijer/L.GeoSearch
         Q: how to import the package into Meteor?
-        - marker image is missing... fix bug
+        - marker image is missing... fix bug (somehow the link to bevanhunt_leaflet got broken. Moved images to public folder)
 
   - plantlist - theplantlist.org (har kontaktet ang licens og brug 29.apr og har ikke svaret 10.maj) haven't answered for more than a week. Go for
 

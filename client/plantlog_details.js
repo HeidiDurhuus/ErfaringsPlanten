@@ -78,7 +78,6 @@ Template.planting_location.rendered = function(){
 //  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
   L.Icon.Default.imagePath = '/images';
 
-  console.log(L.Icon.Default.imagePath);
   map = L.map('map', {    //map is a global variable
     center: [56.00, 10.00],
     zoom: 5
