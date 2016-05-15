@@ -1,30 +1,20 @@
 
+var map = null;
+
 Template.plantlog_details.helpers({
   getPlant: function(id){
     return Plants.findOne({_id:id});
   },
   plantlog: function(){
-    return PlantLog.findOne({_id:Session.get("details_id")});
+    return PlantLog.findOne({_id:Session.get("plantlog_id")});
   },
 });
 
 Template.plantlog_details.events({
-  "click #foo": function(event, template){
-
-  }
 });
 
 
 Template.planting_type.helpers({
-  create: function(){
-
-  },
-  rendered: function(){
-
-  },
-  destroyed: function(){
-
-  },
 });
 
 Template.planting_type.events({
@@ -51,11 +41,6 @@ Template.planting_date.helpers({
 
 Template.planting_date.events({
   "change #datepicker": function(event, template){
-/*
-    console.log(event);
-    console.log(template);
-    console.log(document.getElementById("datepicker").value);
-  */
     var field = "planting_date";
     var value = document.getElementById("datepicker").value
     var plantlog_id = this.id;
@@ -83,7 +68,6 @@ Template.planting_place.events({
     }
   }
 });
-
 
 Template.planting_location.helpers({
   isClickedAdress:function(){
@@ -142,7 +126,7 @@ Template.show_map.rendered = function(){
   map.on('click', function(e) {
 
     Session.set("LatLng", e.latlng);
-    console.log("LatLng " + Session.get("LatLng").lat + " " + Session.get("LatLng").lng);
+  //  console.log("LatLng " + Session.get("LatLng").lat + " " + Session.get("LatLng").lng);
     var zoom = map.getZoom();
 
     //if zoom is equal or less than 18
@@ -156,7 +140,6 @@ Template.show_map.rendered = function(){
       }else{
         map.removeLayer(marker);
         marker = L.marker(Session.get("LatLng")).addTo(map);
-        console.log("marker " + marker.getLatLng());
       }
     }
   });

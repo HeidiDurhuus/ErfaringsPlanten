@@ -1,4 +1,5 @@
 <template name="plantlog_details">
+  {{#with plantlog}}
   <div class="row">
     <div class="col-md-12">
       <a href="/"><span class="glyphicon glyphicon-arrow-left"></span> tilbage</a>
@@ -8,11 +9,11 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body text-center">
-          {{#with getPlant plantlog.plant_id}}
+          {{#with getPlant plant_id}}
             <p><b>{{da}} </b><br/><small>{{lat}}</small> </p>
           {{/with}}
 
-          <img src="{{plantlog.image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
           <br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
       </div>
@@ -21,24 +22,15 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p><span class="glyphicon glyphicon-eye-open"></span></p>
-          {{> planting_type id=plantlog._id}}
-          {{> planting_date id=plantlog._id}}
-          {{> planting_place id=plantlog._id}}
-          {{> planting_location id=plantlog._id}}
+          {{> planting_type id=_id}}
+          {{> planting_date id=_id}}
+          {{> planting_place id=_id}}
+          {{> planting_location id=_id}}
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-            {{> new_plantlog_entry id=plantlog._id}}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-        {{> plantlog_entry id=plantlog._id}}
-    </div>
-  </div>
+  {{/with}}
 </template>
 
 <template name="planting_type">
@@ -55,16 +47,6 @@
 <template name="planting_date">
   <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> Dato
   <input name="plantingDate" type="text" id="datepicker">
-  <!--
-  <div class="radio">
-    <label for="plantingDate"><input type="radio" name="plantingDate"> I dag</label>
-  </div>
-  <div class="radio">
-    <label for="plantingDate"><input type="radio" name="plantingDate"> anden dag:
-      <input type="text" name="plantingDateOther" aria-label="date" placeholder="dd/mm/åå">
-    </label>
-  </div>
--->
 </template>
 
 <template name="planting_place">
@@ -78,7 +60,7 @@
       <option value="haven">haven</option>
       <option value="haven">friland</option>
     </select>
-  </div> <!-- / form group -->
+  </div>
 </template>
 
 <template name="planting_location">

@@ -29,7 +29,12 @@ Router.route('/new_plant_log', function () {
 });
 */
 Router.route('/plantlog_details/:_id', function(){
-  Session.set("details_id", this.params._id);
+  Session.set("plantlog_id", this.params._id);
   this.render("navbar", {to:"header"});
   this.render("plantlog_details", {to:"main"});
+});
+Router.route('/plantlog_entries/:_id', function(){
+  Session.set("plantlog_id", this.params._id);
+  this.render("navbar", {to:"header"});
+  this.render("plantlog_entries", {to:"main"});
 });

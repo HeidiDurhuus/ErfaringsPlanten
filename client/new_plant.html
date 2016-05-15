@@ -1,15 +1,6 @@
 <template name="new_plant">
   <div class="thumbnail">
     <div class="caption">
-<!--
-    <div class="form-group">
-      <select name="plantName" class="form-control js-plant-selected plant-selector" >
-        {{#each plants}}
-          <option value="{{_id}}" data-id="{{_id}}">{{da}} - lat:{{lat}}</option>
-        {{/each}}
-      </select>
-    </div>
--->
     <div class="input-group">
       <input type="text" class="form-control" name="plant_autocomplete" id="searchbox" data-id="{{_id}}">
         <span class="input-group-btn">
@@ -17,32 +8,5 @@
       </span>
     </div>
   </div>
-<!--
-  {{#if isSelected}}
-    {{#if hasImage}}
-      <img src="" alt="" class="plant-image-thumb"/>
-    {{else}}
-
-    <label class="custom-file-upload">
-        <input type="file"/>
-        <i class="fa fa-cloud-upload"></i> Custom Upload
-    </label>
-
-      <button id="button" class="plantImageBtn"><span class="glyphicon glyphicon-picture"></span></button>
-    {{/if}}
-    <div class="caption">
-      {{#if hasEntry}}
-        <p>
-          last entry
-        </p>
-      {{/if}}
-      <p>
-        <button id="button"><span class="glyphicon glyphicon-eye-open"></span></button>
-        <button id="button"><span class="glyphicon glyphicon-pencil"></span></button>
-        <button id="button"><span class="glyphicon glyphicon-share"></span></button>
-      </p>
-    </div>
-  {{/if}}
--->
   </div>
 </template>

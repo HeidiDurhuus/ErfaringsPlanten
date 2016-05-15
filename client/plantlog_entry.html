@@ -1,3 +1,58 @@
+<template name="plantlog_entries">
+  {{#with plantlog}}
+  <div class="row">
+    <div class="col-md-12">
+      <a href="/"><span class="glyphicon glyphicon-arrow-left"></span> tilbage</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body text-center">
+          {{#with getPlant plant_id}}
+            <p><b>{{da}} </b><br/><small>{{lat}}</small> </p>
+          {{/with}}
+
+          <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p><span class="glyphicon glyphicon-eye-open"></span></p>
+          <p>
+            {{planting_type}}
+          </p>
+          <p>
+            {{planting_date}}
+          </p>
+          <p>
+            {{planting_place}}
+          </p>
+          <p>
+            {{planting_location}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{> new_plantlog_entry id=_id}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{#each entries}}
+        {{> plantlog_entry}}
+      {{/each}}
+    </div>
+  </div>
+  {{/with}}
+</template>
+
 <template name="new_plantlog_entry">
   <form id="saveEntry">
   <div class="panel panel-default">
@@ -5,16 +60,12 @@
       <label for="plantUpdate">Hvordan har planten det? eller er der andet nyt?</label>
     </div>
     <div class="panel-body">
-      <!--
-      <input class="form-control" id="plantUpdate" name="plantUpdate" placeholder="Planten er nu 20 cm høj og pottet om til højbed med jordkontakt i haven">
-      -->
       <button id="btnText" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> text</button>
       <button id="btnImage" class="btn btn-default"><span class="glyphicon glyphicon-picture"></span> billede</button>
       <button id="btnScore" class="btn btn-default"><span class="glyphicon glyphicon-leaf"></span> score</button>
       <button id="btnSoilmoist" class="btn btn-default"><span class="glyphicon glyphicon-tint"></span> jordfugt</button>
 
     {{#if isEdited}}
-
       <div class="row">
         <div class="col-md-2 margin">
           <input type="text" id="txtDate" value="{{today}}" disabled="true">
@@ -116,25 +167,33 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-2">
-          11/05/2016
+          <i>{{getDate date}}</i>
         </div>
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-12">
-              planten vokser ...
+              {{#if text}}
+                {{text}}
+              {{/if}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 margin">
-              <span class="glyphicon glyphicon-leaf"></span> plantescore: 5
+              {{#if score}}
+              <span class="glyphicon glyphicon-leaf"></span> plantescore: {{score}}
+              {{/if}}
             </div>
             <div class="col-md-6 margin">
-              <span class="glyphicon glyphicon-tint"></span> jordfugtighed: 7
+              {{#if soilmoist}}
+              <span class="glyphicon glyphicon-tint"></span> jordfugtighed: {{soilmoist}}
+              {{/if}}
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <img src="http://www.kolibrikerteszet.hu/files/Kepek/rosa/Rosa%20Rugosa.jpg" alt="" class="img-rounded plant-image-thumb"/>
+        <div class="col-md-4 margin">
+          {{#if image}}
+          <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+          {{/if}}
         </div>
       </div>
     </div>

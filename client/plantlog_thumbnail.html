@@ -1,0 +1,35 @@
+<template name="plantlog_thumbnail">
+  <div class="thumbnail">
+    <div class="caption">
+      {{#with getPlant plant_id}}
+        <p>{{da}} <br/><small>{{lat}}</small> </p>
+      {{/with}}
+    </div>
+    {{#if hasImage}}
+      <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+      <!-- her skal noget med at checke om der findes et billede i entries, og så hente sidste billede fra entries-->
+    {{else}}
+    <form class="js-upload-image" >
+      <label for="fileupload" id="{{_id}}" class="btn btn-default plant-image-btn custom-file-upload js-register-click">
+        <input type="file" id="fileupload" />
+        <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
+      </label>
+    </form>
+    {{/if}}
+    <div class="caption">
+      <p>
+        <a href="/plantlog_details/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+  <!--      <button id="btnEyeOpen" data-id="{{_id}}" class="btn btn-default js-open-eye"><span class="glyphicon glyphicon-eye-open"></span></button> -->
+        <a href="/plantlog_entries/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
+  <!--      <button id="btnShare" data-id="{{plant_id}}" class="btn btn-default"><span class="glyphicon glyphicon-share"></span></button>-->
+      </p>
+    {{#if entries.length}}
+
+      <p>  {{getDate entries}} : {{#if getText entries}}{{getText entries}} {{/if}} </p>
+      <p>  {{#if getSoilmoist entries}}<span class="glyphicon glyphicon-tint"></span> {{getSoilmoist entries}}{{/if}}</p>
+      <p>  {{#if getScore entries}}<span class="glyphicon glyphicon-leaf"></span> {{getScore entries}} {{/if}}</p>
+
+    {{/if}}
+    </div>
+  </div>
+</template>

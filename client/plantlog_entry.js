@@ -1,4 +1,21 @@
 
+Template.plantlog_entries.helpers({
+  plantlog: function(){
+      console.log(PlantLog.findOne({_id: Session.get("plantlog_id")}));
+    return PlantLog.findOne({_id: Session.get("plantlog_id")});
+  },
+  getPlant:function(plantid){
+    return Plants.findOne({_id:plantid})
+  },
+});
+
+Template.plantlog_entries.events({
+  "click #foo": function(event, template){
+
+  }
+});
+
+
 /*The image should be saved only when all the other entries are saved*/
 var dataUrl = null;
 /*this date/timestamp is used to check if there is an entry begun */
@@ -40,9 +57,6 @@ Template.new_plantlog_entry.helpers({
   today: function(){
     if(!today){
       today = new Date();
-      console.log(this.id);
-      //entry.date = today;
-      //Meteor.call("beginPlantlogEntry", this.id, today);
     }
     return today.getDate() + "/" + (today.getMonth() + 1) +"/"+ today.getFullYear();//today.parse("YYYY-MM-DD");
   },
@@ -87,15 +101,12 @@ Template.new_plantlog_entry.events({
     if(!file){return;}
 
     var fileReader = new FileReader();
-    //var dataUrl;
     fileReader.onload = function(event){
       dataUrl = event.target.result;
-      //Meteor.call("saveFile", dataUrl, id);
     }
     fileReader.readAsDataURL(file);
     Session.set("gotImage", true);
     Session.set("imageUrl", window.URL.createObjectURL(file));
-    //  console.log(window.URL.createObjectURL(file));
   },
   "submit #saveEntry": function(event, template){
     event.preventDefault();
@@ -129,6 +140,10 @@ Template.new_plantlog_entry.events({
         console.log(result);
       }
     });
+    Session.set("clickedText", false);
+    Session.set("clickedImage", false);
+    Session.set("clickedScore", false);
+    Session.set("clickedSoilMoist", false);
   }
 });
 
@@ -140,3 +155,19 @@ function getCheckedText(radios){
   }
   return "no selection";
 }
+
+
+Template.plantlog_entry.helpers({
+  getDate: function(date){
+    if(date){
+      return date.getDate() + "/" + (date.getMonth() + 1) +"/"+ date.getFullYear();
+    }
+    return "";
+  },
+});
+
+Template.plantlog_entry.events({
+  "click #foo": function(event, template){
+
+  }
+});

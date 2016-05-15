@@ -1,12 +1,6 @@
 /*
  The logic:
  always one 'extra' plant where name not chosen
- can show_plant and new_plant be the same? - when entering a new plant, insert a new plantlog _id with no plant.
- So the new plant is acutally an update of the last new plantlog insert with no plant.
- Solution db-driven
- 1) when user signs in first time, create plantlog.insert({... userId: userId ...all else empty})
- 2) when plantid is updated from null, do create plantlog.insert( like above)
- 3) in template: if plantid == null helper returns false (is this possible?) -> means checking every plantlog row
 
  Solution template db-driven
  there is somehow always one new_plant at the end...
@@ -18,7 +12,6 @@
  Must somehow pass a variable to the template to fire a "has no plant selected" - check if cursor is empty??
 */
 Template.new_plant.rendered = function(){
-//  AutoCompletion.init("input#searchbox");
   AutoCompletion.init("input#searchbox");
 }
 
@@ -38,24 +31,6 @@ Template.new_plant.helpers({
 });
 
 Template.new_plant.events({
-  /*
-  "change .js-plant-selected": function(event, template){
-
-    var plant_id = event.currentTarget.options[event.currentTarget.selectedIndex].value;
-
-    console.log(plant_id);
-
-    Meteor.call("insertNewPlantLog", plant_id, function(error, result){
-      if(error){
-        console.log("error", error);
-      }
-      if(result){
-        console.log("result: " + result);
-      }
-    });
-
-    Session.set("isSelected", true);
-  },*/
   "keyup input#searchbox": function(){
     AutoCompletion.autocomplete({
       element: 'input#searchbox',
@@ -67,27 +42,14 @@ Template.new_plant.events({
   },
   "click .js-select-plant": function(event){
     event.preventDefault();
-    //var plant_id = document.getElementById("searchbox").
-//      console.log(document.getElementById("searchbox").value);
-      var string = document.getElementById("searchbox").value
-      var plant_id = Plants.findOne({da:string})._id;
+    var string = document.getElementById("searchbox").value
+    var plant_id = Plants.findOne({da:string})._id;
 
-      Meteor.call("insertNewPlantLog", plant_id, function(error, result){
-        if(error){
-          console.log("error", error);
-        }
-        if(result){
-          //console.log("result: " + result);
-        }
-      });
-      document.getElementById("searchbox").value = "";
+    Meteor.call("insertNewPlantLog", plant_id, function(error){
+      if(error){
+        console.log("error", error);
+      }
+    });
+    document.getElementById("searchbox").value = "";
   },
-/*
-  "change input#searchbox": function(){
-    console.log("change");
-  },
-  "click input#searchbox": function(){
-    console.log("click");
-  }
-  */
 });

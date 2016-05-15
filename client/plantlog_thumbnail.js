@@ -7,7 +7,7 @@ Template.show_plant.onCreated(function(){
 */
 var clicked_id = null;
 
-Template.show_plantlog_thumbnail.helpers({
+Template.plantlog_thumbnail.helpers({
   getPlant:function(plantid){
     return Plants.findOne({_id:plantid})
   },
@@ -22,10 +22,30 @@ Template.show_plantlog_thumbnail.helpers({
       return false;
     }
     return true;
-  }
+  },
+  getDate: function(entries){
+    var lastEntry = entries[entries.length-1];
+    var date = lastEntry.date;
+    if(date){
+      return date.getDate() + "/" + (date.getMonth() + 1) +"/"+ date.getFullYear();
+    }
+    return "";
+  },
+  getText: function(entries){
+    var lastEntry = entries[entries.length-1];
+    return lastEntry.text;
+  },
+  getSoilmoist: function(entries){
+    var lastEntry = entries[entries.length-1];
+    return lastEntry.soilmoist;
+  },
+  getScore: function(entries){
+    var lastEntry = entries[entries.length-1];
+    return lastEntry.score;
+  },
 });
 
-Template.show_plantlog_thumbnail.events({
+Template.plantlog_thumbnail.events({
   "change .js-upload-image": function(event, template){
     event.preventDefault();
     var id = clicked_id;
