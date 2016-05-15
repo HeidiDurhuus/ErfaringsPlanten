@@ -22,9 +22,9 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p><span class="glyphicon glyphicon-eye-open"></span></p>
-          {{> planting_type id=_id}}
-          {{> planting_date id=_id}}
-          {{> planting_place id=_id}}
+          {{> planting_type id=_id}}<br/>
+          {{> planting_date id=_id}}<br/>
+          {{> planting_place id=_id}}<br/>
           {{> planting_location id=_id}}
         </div>
       </div>
@@ -67,6 +67,24 @@
   <div class="form-group">
     <label for="location">
     <span class="glyphicon glyphicon-globe"></span></label> Lokation<br/>
+    <div id="map" class="">
+
+    </div>
+    <br/>
+    <p>
+      breddegrad: <span id="lat">{{#if latitude}}{{latitude}}{{/if}}</span>
+    </p>
+    <p>
+      længdegrad: <span id="lng">{{#if longitude}}{{longitude}}{{/if}}</span>
+    </p>
+  </div>
+</template>
+
+<!--
+<template name="planting_location">
+  <div class="form-group">
+    <label for="location">
+    <span class="glyphicon glyphicon-globe"></span></label> Lokation<br/>
     <div class="btn-group" role="group" aria-label="...">
       <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
       <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>
@@ -95,9 +113,11 @@
     {{/if}}
   </div>
 </template>
-
+-->
+<!--
 <template name="show_map">
   <div id="map" class="">
 
   </div>
 </template>
+-->
