@@ -43,13 +43,15 @@ Template.new_plant.events({
   "click .js-select-plant": function(event){
     event.preventDefault();
     var string = document.getElementById("searchbox").value
-    var plant_id = Plants.findOne({da:string})._id;
-
-    Meteor.call("insertNewPlantLog", plant_id, function(error){
-      if(error){
-        console.log("error", error);
-      }
-    });
+    var get_plant_id = Plants.findOne({da:string});
+    if(get_plant_id){
+      var plant_id = get_plant_id._id;
+      Meteor.call("insertNewPlantLog", plant_id, function(error){
+        if(error){
+          console.log("error", error);
+        }
+      });
+    }
     document.getElementById("searchbox").value = "";
   },
 });
