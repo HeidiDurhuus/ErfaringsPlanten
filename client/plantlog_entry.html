@@ -9,9 +9,13 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body text-center">
+<!--
           {{#with getPlant plant_id}}
             <p><b>{{da}} </b><br/><small>{{lat}}</small> </p>
           {{/with}}
+-->
+          <p><b>{{plantname_da}} </b><br/><small>{{plantname_lat}}</small> </p>
+
 
           <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
           <br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -32,7 +36,7 @@
             <span class="glyphicon glyphicon-home"></span> {{planting_place}}
           </p>
           <p>
-            <span class="glyphicon glyphicon-globe"></span> længdegrad: {{planting_location.lat}}, breddegrad: {{planting_location.lng}} 
+            <span class="glyphicon glyphicon-globe"></span> længdegrad: {{planting_location.lat}}, breddegrad: {{planting_location.lng}}
           </p>
         </div>
       </div>

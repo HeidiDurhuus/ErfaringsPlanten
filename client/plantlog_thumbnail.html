@@ -1,9 +1,12 @@
 <template name="plantlog_thumbnail">
   <div class="thumbnail">
     <div class="caption">
+<!--
       {{#with getPlant plant_id}}
         <p>{{da}} <br/><small>{{lat}}</small> </p>
       {{/with}}
+-->
+      <p>{{plantname_da}} <br/><small>{{plantname_lat}}</small> </p>
     </div>
     {{#if hasImage}}
       <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>

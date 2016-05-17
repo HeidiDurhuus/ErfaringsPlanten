@@ -42,13 +42,20 @@ Template.new_plant.events({
   },
   "click .js-select-plant": function(event){
     event.preventDefault();
-    var string = document.getElementById("searchbox").value
-    var get_plant_id = Plants.findOne({da:string});
-    if(get_plant_id){
-      var plant_id = get_plant_id._id;
-      Meteor.call("insertNewPlantLog", plant_id, function(error){
+    var plant_name = document.getElementById("searchbox").value
+    var get_plant = Plants.findOne({da:plant_name});
+    if(get_plant){
+      var plant_id = get_plant._id;
+      Meteor.call("insertNewPlantLog", plant_id, plant_name, function(error, result){
         if(error){
           console.log("error", error);
+        }
+        if(result){   //insert plantname
+          var query = {};
+          query["plantname_da"] = get_plant.da;
+          query["plantname_lat"] = get_plant.lat;
+          var plantlog_id = result;
+          Meteor.call("updatePlantlog", plantlog_id, query);
         }
       });
     }
