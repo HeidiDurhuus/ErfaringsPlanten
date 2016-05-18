@@ -15,6 +15,35 @@ Template.plantlog_details.events({
 
 
 Template.planting_type.helpers({
+  options: function(id){
+    var opt = [{
+      attributes: {
+        value: "Plantet stikling"
+        },
+      text: "Plantet stikling"
+      },{
+      attributes: {
+        value: "Sået frø"
+        },
+      text: "Sået frø"},
+      {
+      attributes:{
+        value: "Plantet plante"
+      },
+      text: "Plantet plante"
+      }
+    ];
+
+    var pt = PlantLog.findOne({_id:id});
+    if(pt.planting_type){
+      for(var i = 0; i < opt.length; i++){
+        if(pt.planting_type == opt[i].text){
+          opt[i].attributes.selected = true;
+        }
+      }
+    }
+    return opt;
+  }
 });
 
 Template.planting_type.events({
@@ -22,12 +51,9 @@ Template.planting_type.events({
     var field = "planting_type";
     var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
     var plantlog_id = this.id;
-    console.log(this);
     if(value != ""){
       var query = {};
       query[field] = value;
-      console.log(plantlog_id);
-      console.log(value);
       Meteor.call("updatePlantlog", plantlog_id, query);
     }
   }
@@ -37,6 +63,13 @@ Template.planting_date.rendered = function(){
   $("#datepicker").datepicker();
 }
 Template.planting_date.helpers({
+  hasDate: function(id){
+    var pl = PlantLog.findOne({_id:id});
+    if(pl.planting_date){
+      return pl.planting_date;
+    }
+    return null;
+  }
 });
 
 Template.planting_date.events({
@@ -54,6 +87,48 @@ Template.planting_date.events({
 
 
 Template.planting_place.helpers({
+  options: function(id){
+
+    var opt = [{
+      attributes: {
+        value: "vinduekarm"
+        },
+      text: "vinduekarm"
+      },{
+      attributes: {
+        value: "altan"
+        },
+      text: "altan"},
+      {
+      attributes:{
+        value: "drivhus"
+      },
+      text: "drivhus"
+    },
+    {
+      attributes:{
+        value: "haven"
+      },
+      text: "haven"
+    },
+    {
+      attributes:{
+        value: "friland"
+      },
+      text: "friland"
+    }
+    ];
+
+    var pp = PlantLog.findOne({_id:id});
+    if(pp.planting_place){
+      for(var i = 0; i < opt.length; i++){
+        if(pp.planting_place == opt[i].text){
+          opt[i].attributes.selected = true;
+        }
+      }
+    }
+    return opt;
+  }
 });
 
 Template.planting_place.events({

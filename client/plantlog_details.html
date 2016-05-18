@@ -40,15 +40,16 @@
     <span class="glyphicon glyphicon-grain"></span></label> Frø / plante
     <select name="plantingType" class="js-insert-plantingtype" >
       <option value=""> - vælg - </option>
-      <option value="Sået frø">Sået frø</option>
-      <option value="Plantet stikling">Plantet stikling</option>
-      <option value="Plantet plante">Plantet plante</option>
+      {{#each options id}}
+      <option {{attributes}}>{{text}}</option>
+      {{/each}}
     </select>
 </template>
 
+
 <template name="planting_date">
   <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> Dato
-  <input name="plantingDate" type="text" id="datepicker">
+  <input name="plantingDate" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
 </template>
 
 <template name="planting_place">
@@ -57,11 +58,9 @@
     <span class="glyphicon glyphicon-home"></span></label> Sted
     <select name="plantingPlace" class="js-insert-plantingplace">
       <option value=""> - vælg - </option>
-      <option value="vinduekarm">vinduekarm</option>
-      <option value="altan">altan</option>
-      <option value="drivhus">drivhus</option>
-      <option value="haven">haven</option>
-      <option value="friland">friland</option>
+      {{#each options id}}
+      <option {{attributes}}>{{text}}</option>
+      {{/each}}
     </select>
   </div>
 </template>
