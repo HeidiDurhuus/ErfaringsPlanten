@@ -8,82 +8,44 @@ Meteor.startup(function () {
     }
   }
   if(!Plants.findOne()){
-/*
-      Virker ikke helt. nogle lat navne er endt i da, og nogle lat er tomme...
-*/
-    var textfile = Assets.getText('plantlist.txt');
+
+    var textfile = Assets.getText('danske_plantenavne.txt');
     var lines = textfile.split("\n");
     //hvis har ...
     //tag det som er før ... og det som er efter ... trim
 
-    var lat, da;
-    var cleaned = new Array();
-
-    //    for(var i = 0; i < 20; i++){
+    var lat, da, da_lat;
 
     for(var i = 0; i < lines.length; i++){  //Change to this when autocomplete works!!
 
       var line = lines[i];
-      lat = line.substring(0, line.indexOf("..."));
-      da = line.substring((line.lastIndexOf("...")+3), line.length).trim();
-
-
-      Plants.insert({
-        lat: lat,
-        da: da
-      });
-
-  /*
-      cleaned.push(
-        {
-          lat: lat,
-          da: da
+      //hvis indeholder ..
+      if(line.indexOf("..") > -1){
+        da = line.substring(0, line.indexOf(".."));
+        lat = line.substring((line.lastIndexOf("..")+2), line.length).trim();
+        //check er dette en ny plante eller resten af den ovenfor
+        var nextline = lines[i+1];
+        if(nextline.indexOf("..") == -1){
+          lat += " " + nextline.trim()
         }
-      );
-*/
+        da = replaces(da);  //replace char 166 with space
+        da_lat = da + " - " + lat;
+        Plants.insert({
+          lat: lat,
+          da: da,
+          da_lat: da_lat,
+        });
+      }
     }
-    //Plants.insert(cleaned);
     console.log("inserted " + lines.length + " plantnames");
   }
-/*
-  if(!Plants.findOne()){
-    console.log("inserting plants ");
-    Plants.insert({
-      name_da: "Sankthansurt",
-      order: "Saxifragales",
-      family: "Crassulaceae",
-      genus: "Hylotelephium",
-      species: "Hylotelephium telephium",
-      variant: "",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Sedum_telephium_subsp_maximum_200807.jpg/618px-Sedum_telephium_subsp_maximum_200807.jpg"
-    });
-    Plants.insert({
-      name_da: "Have-Timian",
-      order: "Magnoliopsida",
-      family: "Lamiaceae",
-      genus: "Thymus",
-      species: "Thymus vulgaris",
-      variant: "",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Flickr_-_cyclonebill_-_Timian.jpg/640px-Flickr_-_cyclonebill_-_Timian.jpg"
-    });
-    Plants.insert({
-      name_da: "Æblemynte (rundbladet mynte)",
-      order: "Lamiales",
-      family: "Lamiaceae",
-      genus: "Mentha",
-      species: "Mentha suaveolens",
-      variant: "",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Apple_mint_plant.jpg/448px-Apple_mint_plant.jpg"
-    });
-    Plants.insert({
-      name_da: "Gul Daglilje",
-      order: "Aspasagales",
-      family: "Hemerocallidaceae",
-      genus: "Hemerocallis",
-      species: "Hemerocallis citrina",
-      variant: "",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Hemerocallis_thunbergii_034.jpg/640px-Hemerocallis_thunbergii_034.jpg"
-    });
-  }
-  */
 });
+
+function replaces(str){
+  var splittet = str.split(String.fromCharCode(166));
+  str = "";
+  for(var i = 0; i < splittet.length; i ++){
+    str += splittet[i] + " ";
+  }
+  return str;
+}

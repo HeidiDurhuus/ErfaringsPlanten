@@ -35,7 +35,7 @@ Template.new_plant.events({
     AutoCompletion.autocomplete({
       element: 'input#searchbox',
       collection: Plants,
-      field: 'da',
+      field: 'da_lat',
       limit: 8,
       sort: {da: 1}
     });
@@ -43,7 +43,7 @@ Template.new_plant.events({
   "click .js-select-plant": function(event){
     event.preventDefault();
     var plant_name = document.getElementById("searchbox").value
-    var get_plant = Plants.findOne({da:plant_name});
+    var get_plant = Plants.findOne({da_lat:plant_name});
     if(get_plant){
       var plant_id = get_plant._id;
       Meteor.call("insertNewPlantLog", plant_id, plant_name, function(error, result){
