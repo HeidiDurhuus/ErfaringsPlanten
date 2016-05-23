@@ -13,6 +13,19 @@ Template.navbar.helpers({
     }else{
       return false;
     }
+  },
+  currentLanguage: function(){
+    return i18n.getLanguage();
+  },
+  languages: function(){
+    //for now its hardcoded - In the future I would like to extend the i18n package to list languages
+    var lang = new Array();
+    if(i18n.getLanguage() == "da"){
+      lang.push({language: "en"});
+    }else{
+      lang.push({language: "da"});
+    }
+    return lang;
   }
 });
 
@@ -30,6 +43,10 @@ Template.navbar.events({
      Session.set("btn1", 0);
      Session.set("btn2", 0);
      Session.set("btn3", 1);
+  },
+  "click .js-select-language": function(event){
+    i18n.setLanguage(event.currentTarget.id);
+    Meteor.call("setUserLanguage", event.currentTarget.id);
   }
 });
 

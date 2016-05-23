@@ -2,17 +2,13 @@
   {{#with plantlog}}
   <div class="row">
     <div class="col-md-12">
-      <a href="/"><span class="glyphicon glyphicon-arrow-left"></span> tilbage</a>
+      <a href="/"><span class="glyphicon glyphicon-arrow-left"></span> {{i18n "plantlog_details.back"}}</a>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-body text-center">
-<!--          {{#with getPlant plant_id}}
-            <p><b>{{da}} </b><br/><small>{{lat}}</small> </p>
-          {{/with}}
--->
           <p><b>{{plantname_da}} </b><br/><small>{{plantname_lat}}</small> </p>
 
           <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
@@ -37,9 +33,9 @@
 
 <template name="planting_type">
   <label for="plantingType">
-    <span class="glyphicon glyphicon-grain"></span></label> Frø / plante
+    <span class="glyphicon glyphicon-grain"></span></label> {{i18n "planting_type.type"}}
     <select name="plantingType" class="js-insert-plantingtype" >
-      <option value=""> - vælg - </option>
+      <option value=""> - {{i18n "planting_type.select"}} - </option>
       {{#each options id}}
       <option {{attributes}}>{{text}}</option>
       {{/each}}
@@ -48,16 +44,16 @@
 
 
 <template name="planting_date">
-  <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> Dato
+  <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> {{i18n "planting_date.date"}}
   <input name="plantingDate" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
 </template>
 
 <template name="planting_place">
   <div class="form-group">
     <label for="plantingPlace">
-    <span class="glyphicon glyphicon-home"></span></label> Sted
+    <span class="glyphicon glyphicon-home"></span></label> {{i18n "planting_place.place"}}
     <select name="plantingPlace" class="js-insert-plantingplace">
-      <option value=""> - vælg - </option>
+      <option value=""> - {{i18n "planting_place.select"}} - </option>
       {{#each options id}}
       <option {{attributes}}>{{text}}</option>
       {{/each}}
@@ -68,16 +64,16 @@
 <template name="planting_location">
   <div class="form-group">
     <label for="location">
-    <span class="glyphicon glyphicon-globe"></span></label> Lokation<br/>
+    <span class="glyphicon glyphicon-globe"></span></label> {{i18n "planting_location.location"}}<br/>
     <div id="map" class="">
 
     </div>
     <br/>
     <p>
-      breddegrad: <span id="lat">{{#if latitude}}{{latitude}}{{/if}}</span>
+      {{i18n "planting_location.lat"}}: <span id="lat">{{#if latitude}}{{latitude}}{{/if}}</span>
     </p>
     <p>
-      længdegrad: <span id="lng">{{#if longitude}}{{longitude}}{{/if}}</span>
+      {{i18n "planting_location.lng"}}: <span id="lng">{{#if longitude}}{{longitude}}{{/if}}</span>
     </p>
   </div>
 </template>

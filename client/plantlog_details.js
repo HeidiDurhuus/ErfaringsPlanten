@@ -18,26 +18,26 @@ Template.planting_type.helpers({
   options: function(id){
     var opt = [{
       attributes: {
-        value: "Plantet stikling"
+        value: 1
         },
-      text: "Plantet stikling"
+      text: i18n("planting_type.clone")
       },{
       attributes: {
-        value: "Sået frø"
+        value: 2
         },
-      text: "Sået frø"},
+      text: i18n("planting_type.seed")},
       {
       attributes:{
-        value: "Plantet plante"
+        value: 3
       },
-      text: "Plantet plante"
+      text: i18n("planting_type.seed")
       }
     ];
 
     var pt = PlantLog.findOne({_id:id});
     if(pt.planting_type){
       for(var i = 0; i < opt.length; i++){
-        if(pt.planting_type == opt[i].text){
+        if(pt.planting_type.value == opt[i].attributes.value){
           opt[i].attributes.selected = true;
         }
       }
@@ -49,7 +49,11 @@ Template.planting_type.helpers({
 Template.planting_type.events({
   "change .js-insert-plantingtype": function(event, template){
     var field = "planting_type";
-    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+//    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+    var value = {
+      value: event.currentTarget.options[event.currentTarget.selectedIndex].value,
+      text: event.currentTarget.options[event.currentTarget.selectedIndex].label
+    };
     var plantlog_id = this.id;
     if(value != ""){
       var query = {};
@@ -91,38 +95,36 @@ Template.planting_place.helpers({
 
     var opt = [{
       attributes: {
-        value: "vinduekarm"
+        value: 1
         },
-      text: "vinduekarm"
+      text: i18n("planting_place.windowsill")
       },{
       attributes: {
-        value: "altan"
+        value: 2
         },
-      text: "altan"},
-      {
+      text: i18n("planting_place.balcony")
+      },{
       attributes:{
-        value: "drivhus"
+        value: 3
       },
-      text: "drivhus"
-    },
-    {
+      text: i18n("planting_place.greenhouse")
+      },{
       attributes:{
-        value: "haven"
+        value: 4
       },
-      text: "haven"
-    },
-    {
+      text: i18n("planting_place.garden")
+      },{
       attributes:{
-        value: "friland"
+        value: 5
       },
-      text: "friland"
+      text: i18n("planting_place.land")
     }
     ];
 
     var pp = PlantLog.findOne({_id:id});
     if(pp.planting_place){
       for(var i = 0; i < opt.length; i++){
-        if(pp.planting_place == opt[i].text){
+        if(pp.planting_place.value == opt[i].attributes.value){
           opt[i].attributes.selected = true;
         }
       }
@@ -134,7 +136,13 @@ Template.planting_place.helpers({
 Template.planting_place.events({
   "change .js-insert-plantingplace": function(event, template){
     var field = "planting_place";
-    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+//    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
+//    var text = event.currentTarget.options[event.currentTarget.selectedIndex].label;
+
+    var value = {
+      value: event.currentTarget.options[event.currentTarget.selectedIndex].value,
+      text: event.currentTarget.options[event.currentTarget.selectedIndex].label
+    };
     var plantlog_id = this.id;
     if(value != ""){
       var query = {};

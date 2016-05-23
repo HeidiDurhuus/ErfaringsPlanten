@@ -24,6 +24,9 @@ Meteor.methods({
   },
   insertPlantlogEntry: function(plantlog_id, entry){
     var ins = PlantLog.update({_id: plantlog_id}, {$push: {entries: entry}});
+  },
+  setUserLanguage: function(lang){
+    Meteor.users.update(this.userId, {$set: {language: lang}});
   }
 
 });

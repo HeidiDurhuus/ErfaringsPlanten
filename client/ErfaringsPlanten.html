@@ -3,14 +3,14 @@
   {{#if signedIn}}
   <div class="row">
     <div class="col-sm-12 col-md-12">
-      <h2>Min plantelogbog</h2>
+      <h2>{{i18n "home.title"}}</h2>
       {{> show_logs}}
     </div><!-- / col -->
   </div><!-- / row -->
   {{else}}
   <div class="jumbotron text-center" id="overlapping-element">
-    <h1>Velkommen til ErfaringsPlanten</h1>
-    <p>Her kan du lave logbog over dine planter, få andres erfaringer, og samtidig hjælper du videnskaben.</p>
+    <h1>{{i18n "home.welcome"}}</h1>
+    <p> {{i18n "home.text"}}</p>
     <img class="medium-image img-rounded" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Sedum_telephium_subsp_maximum_200807.jpg/618px-Sedum_telephium_subsp_maximum_200807.jpg" alt="" />
   </div>
   {{/if}}
