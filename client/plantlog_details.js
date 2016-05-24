@@ -171,6 +171,21 @@ Template.planting_location.rendered = function(){
   maxZoom: 18
   }).addTo(map);
 
+  // check if marker is already set in db
+  var plantlog = PlantLog.findOne({_id:plantlog_id});
+  if(plantlog){
+    if(plantlog.planting_location){
+      latlng = {
+        lat: plantlog.planting_location.lat,
+        lng: plantlog.planting_location.lng
+      }
+      Session.set("LatLng", latlng);
+      map.setView(latlng, 16);
+      marker = L.marker(latlng).addTo(map);
+    }
+  }
+
+
   //register eventlistener to map
   map.on('click', function(e) {
 
