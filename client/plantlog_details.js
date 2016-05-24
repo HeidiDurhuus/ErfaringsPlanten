@@ -160,7 +160,7 @@ Template.planting_location.rendered = function(){
 
 //  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
   L.Icon.Default.imagePath = '/images';
-
+  $("#map").height($("#map").width());
   map = L.map('map', {    //map is a global variable
     center: [56.00, 10.00],
     zoom: 5
@@ -195,7 +195,7 @@ Template.planting_location.rendered = function(){
     //if zoom is equal or less than 18
     if(zoom < maxZoom){
       map.panTo(latlng);
-      map.setZoom(map.getZoom()+2);
+      map.setZoom(map.getZoom()+4);
     }
     if(zoom == maxZoom){
       if(!marker){

@@ -3,9 +3,6 @@ Template.plantlog_entries.helpers({
   plantlog: function(){
     return PlantLog.findOne({_id: Session.get("plantlog_id")});
   },
-  getPlant:function(plantid){
-    return Plants.findOne({_id:plantid})
-  },
 });
 
 Template.plantlog_entries.events({
