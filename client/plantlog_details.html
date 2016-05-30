@@ -45,7 +45,7 @@
 
 <template name="planting_date">
   <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> {{i18n "planting_date.date"}}
-  <input name="plantingDate" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
+  <input name="plantingDate" class="" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
 </template>
 
 <template name="planting_place">
@@ -63,59 +63,39 @@
 
 <template name="planting_location">
   <div class="form-group">
-    <label for="location">
-    <span class="glyphicon glyphicon-globe"></span></label> {{i18n "planting_location.location"}}<br/>
-    <div id="map" class="">
-
+    <div class="row">
+      <div class="col-md-12">
+        <label for="location">
+        <span class="glyphicon glyphicon-globe"></span></label> {{i18n "planting_location.location"}}
+        <div class="input-group">
+          <input type="text" id="searchLocationAddress" class="form-control" placeholder="Søg på adresse">
+          <span class="input-group-btn">
+            <button id="btnGeosearch" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+        eller zoom ind og sæt en pin på kortet
+        <div id="map" class="">
+        </div>
+      </div>
     </div>
-    <br/>
-    <p>
-      {{i18n "planting_location.lat"}}: <span id="lat">{{#if latitude}}{{latitude}}{{/if}}</span>
-    </p>
-    <p>
-      {{i18n "planting_location.lng"}}: <span id="lng">{{#if longitude}}{{longitude}}{{/if}}</span>
-    </p>
+    <div class="row">
+      {{#with location}}
+      <div class="col-md-6">
+        <p>
+          {{i18n "planting_location.lat"}}: <span id="lat">{{#if latlng.lat}}{{latlng.lat}}{{/if}}</span>
+        </p>
+        <p>
+          {{i18n "planting_location.lng"}}: <span id="lng">{{#if latlng.lng}}{{latlng.lng}}{{/if}}</span>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p>
+          adresse: <span id="location_address">{{#if address}}{{address.street}} {{address.no}}<br/> {{address.postcode}} {{address.city}}{{/if}}</span>
+        </p>
+      </div>
+      {{/with}}
+    </div>
   </div>
 </template>
-
-<!--
-<template name="planting_location">
-  <div class="form-group">
-    <label for="location">
-    <span class="glyphicon glyphicon-globe"></span></label> Lokation<br/>
-    <div class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-default js-insert-adress" name="location">Adresse</button>
-      <button type="button" class="btn btn-default js-insert-latlng" name="location">Længde- og breddegrad</button>
-      <button type="button" class="btn btn-default js-insert-from-map" name="location">Kort</button>
-    </div>
-    {{#if isClickedAdress}}
-    <div class="form-group">
-      <label for="locationAdressStreet">Gade</label>
-      <input type="text" class="form-control" name="locationAdressStreet" placeholder="Gade">
-      <label for="locationAdressNo">Nr</label>
-      <input type="text" class="form-control" name="locationAdressNo" placeholder="Nr">
-      <label for="locationAdressPostcode">Postnr</label>
-      <input type="text" class="form-control" name="locationAdressPostcode" placeholder="Postnr">
-    </div>
-    {{/if}}
-    {{#if isClickedLatLng}}
-    <div class="form-group">
-      <label for="locationLat">Breddegrad</label>
-      <input type="text" class="form-control" name="locationLat" placeholder="(-90 og 90), højst 14 decimaler, feks 55.52863052257191">
-      <label for="locationLng">Længdegrad</label>
-      <input type="text" class="form-control" name="locationLng" placeholder="(-180 - 180), højst 14 decimaler, feks 9.25048828125">
-    </div>
-    {{/if}}
-    {{#if isClickedMap}}
-      {{> show_map}}
-    {{/if}}
-  </div>
-</template>
--->
-<!--
-<template name="show_map">
-  <div id="map" class="">
-
-  </div>
-</template>
--->

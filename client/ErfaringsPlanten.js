@@ -17,15 +17,6 @@ var map = null;
 
 
 Template.home.helpers({
-  create: function(){
-    console.log("home created");
-  },
-  rendered: function(){
-    console.log("home rendered");
-  },
-  destroyed: function(){
-    console.log("home destroyed");
-  },
   signedIn: function(){
     if(Meteor.userId()){
       Session.set("userid", Meteor.userId());
@@ -35,11 +26,22 @@ Template.home.helpers({
     }
   }
 });
-
+Template.home.events({
+  "click #btnNewPlant": function(event, template){
+    if(!Session.get("newPlant")){
+      Session.set("newPlant", true);
+    }else{
+      Session.set("newPlant", false);            
+    }
+  }
+});
 
 
 Template.show_logs.helpers({
   plants: function(){
     return PlantLog.find({user_id:Meteor.userId()});
+  },
+  newPlant: function(){
+    return Session.get("newPlant");
   }
 });

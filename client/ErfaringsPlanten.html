@@ -3,7 +3,7 @@
   {{#if signedIn}}
   <div class="row">
     <div class="col-sm-12 col-md-12">
-      <h2>{{i18n "home.title"}}</h2>
+      <h2>{{i18n "home.title"}} <button id="btnNewPlant" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Log</button></h2>
       {{> show_logs}}
     </div><!-- / col -->
   </div><!-- / row -->
@@ -18,13 +18,15 @@
 
 <template name="show_logs">
   <div class="row">
+    {{#if newPlant}}
+    <div class="col-xs-12  col-sm-6 col-md-3">
+      {{> new_plant}}
+    </div>
+    {{/if}}
     {{#each plants}}
-      <div class="col-sm-6 col-md-3">
+      <div class="col-xs-12 col-sm-6 col-md-3">
         {{> plantlog_thumbnail}}
       </div>
     {{/each}}
-    <div class="col-sm-6 col-md-3">
-      {{> new_plant}}
-    </div>
   </div>
 </template>

@@ -34,19 +34,25 @@ Meteor.methods({
         }
       }
     });
-
-/*
-    var ins = PlantLog.update({
-      _id: plantlog_id
-    }, {
-      $push: {
-        entries: entry
-      }
-    });
-*/
   },
   setUserLanguage: function(lang){
     Meteor.users.update(this.userId, {$set: {language: lang}});
+  },
+  getGeosearch:function(url, referrer){
+    try{
+        var result = HTTP.call('GET', url, {
+          headers: {
+            "User-Agent": "Meteor/1.0",
+            "Referrer": referrer
+          }
+        });
+        if(result.statusCode == 200){
+          return result.content;
+        }
+    }catch(err){
+      console.log("catch: " + err);
+    }
   }
+
 
 });

@@ -1,5 +1,6 @@
 
 var map = null;
+var marker = null;
 
 Template.plantlog_details.helpers({
   getPlant: function(id){
@@ -155,7 +156,7 @@ Template.planting_place.events({
 Template.planting_location.rendered = function(){
   var maxZoom = 18;
   var latlng = null;
-  var marker = null;
+//  var marker = null;
   var plantlog_id = this.data.id;
 
 //  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
@@ -171,17 +172,24 @@ Template.planting_location.rendered = function(){
   maxZoom: 18
   }).addTo(map);
 
+
   // check if marker is already set in db
   var plantlog = PlantLog.findOne({_id:plantlog_id});
   if(plantlog){
-    if(plantlog.planting_location){
+    if(plantlog.planting_location.latlng){
       latlng = {
-        lat: plantlog.planting_location.lat,
-        lng: plantlog.planting_location.lng
+        lat: plantlog.planting_location.latlng.lat,
+        lng: plantlog.planting_location.latlng.lng
       }
-      Session.set("LatLng", latlng);
+      //Session.set("LatLng", latlng);
       map.setView(latlng, 16);
-      marker = L.marker(latlng).addTo(map);
+      if(!marker){
+        marker = L.marker(latlng).addTo(map);
+      }else{
+        map.removeLayer(marker);
+        marker = L.marker(latlng).addTo(map);
+      }
+      //Session.set("locationAddress", plantlog.planting_location.address);
     }
   }
 
@@ -204,109 +212,124 @@ Template.planting_location.rendered = function(){
         map.removeLayer(marker);
         marker = L.marker(latlng).addTo(map);
       }
-      var field = "planting_location";
-      var query = {};
-      query[field] = latlng;
-      Meteor.call("updatePlantlog", plantlog_id, query);
-      Session.set("LatLng", latlng);
+
+    var parameters = {
+      lat: latlng.lat,
+      lon: latlng.lng,
+      zoom: zoom,
+      format: "json",
+      addressdetails: 1
+    }
+    var url = 'http://nominatim.openstreetmap.org/reverse' + L.Util.getParamString(parameters);
+    var referrer = document.referrer;
+     Meteor.call("getGeosearch", url, referrer, function(err, result){
+       if(err){
+         console.log("error " + err);
+       }
+       if (result) {
+         result = JSON.parse(result);
+
+         var address = {
+           street: result.address.road,
+           no: result.address.house_number,
+           postcode: result.address.postcode,
+           city: result.address.city,
+           country: result.address.country,
+           country_code: result.address.country_code
+         }
+         var field = "planting_location";
+         var query = {};
+         query[field] = {
+           latlng: latlng,
+           address: address
+         };
+         Meteor.call("updatePlantlog", plantlog_id, query);
+
+       }
+     });
+
     }
   });
 };
 
 Template.planting_location.helpers({
-  latitude:function(){
-    if(Session.get("LatLng")){
-      return Session.get("LatLng").lat;
-    }
-    return false;
-  },
-  longitude: function(){
-    if(Session.get("LatLng")){
-    return Session.get("LatLng").lng;
-    }
-    return false;
-  },
-});
-
-
-/*
-Template.planting_location.helpers({
-  isClickedAdress:function(){
-      return Session.get("addressOpen");
-  },
-  isClickedLatLng: function(){
-    return Session.get("latlngOpen");
-  },
-  isClickedMap:function(){
-      return Session.get("mapOpen");
+  location: function(){
+    return PlantLog.findOne({_id:this.id}).planting_location;
   }
 });
-*/
-/*
+
 Template.planting_location.events({
-  "click .js-insert-adress": function(event, template){
-    if(Session.get("addressOpen")){
-      Session.set("addressOpen", false);
-    }else{
-      Session.set("addressOpen", true);
+  "click #btnGeosearch": function(event, template){
+    var query = document.getElementById("searchLocationAddress").value;
+    var parameters = {
+      q: query,
+      format: "json",
+      addressdetails: 1
     }
-  },
-  "click .js-insert-latlng": function(event, template){
-    if(Session.get("latlngOpen")){
-      Session.set("latlngOpen", false);
-    }else{
-      Session.set("latlngOpen", true);
-    }
-  },
-  "click .js-insert-from-map": function(event, template){
-    if(Session.get("mapOpen")){
-      Session.set("mapOpen", false);
-    }else{
-      Session.set("mapOpen", true);
-    }
-  },
-});
-*/
+    var url = 'http://nominatim.openstreetmap.org/search' + L.Util.getParamString(parameters);
 
-
+    Meteor.call("getGeosearch", url, function(err, result){
+     if(err){
+       console.log("error " + err);
+     }
+     if (result) {
+       var result_arr = JSON.parse(result);
+       if (result_arr.length == 1) {
+         result = result_arr[0];
+         var latlng = {
+           lat: result.lat,
+           lng: result.lon
+         };
+         map.setView(latlng, 16);
+         setMarker(marker);
 /*
-Template.show_map.rendered = function(){
-  var maxZoom = 18;
-  var marker = null;
-  var latlng = null;
-  var marker = null;
+         if(!marker){
+           marker = L.marker(latlng).addTo(map);
+         }else{
+           map.removeLayer(marker);
+           marker = L.marker(latlng).addTo(map);
+         }
+*/       var address = {
+           street: result.address.road,
+           no: result.address.house_number,
+           postcode: result.address.postcode,
+           city: result.address.city,
+           country: result.address.country,
+           country_code: result.address.country_code
+         }
 
-  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
-  map = L.map('map', {    //map is a global variable
-    center: [56.00, 10.00],
-    zoom: 5
-  });
+         var field = "planting_location";
+         var plantlog_id = template.data.id;
+         var query = {};
+         query[field] = {
+           latlng: latlng,
+           address: address
+         };
+         Meteor.call("updatePlantlog", plantlog_id, query, function(err, result){
+           if(err){
+             console.log(err);
+           }
+         });
 
-  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-  maxZoom: 18
-  }).addTo(map);
-
-  //register eventlistener to map
-  map.on('click', function(e) {
-
-    Session.set("LatLng", e.latlng);
-  //  console.log("LatLng " + Session.get("LatLng").lat + " " + Session.get("LatLng").lng);
-    var zoom = map.getZoom();
-
-    //if zoom is equal or less than 18
-    if(zoom < maxZoom){
-      map.panTo(Session.get("LatLng"));
-      map.setZoom(map.getZoom()+2);
-    }
-    if(zoom == maxZoom){
-      if(!marker){
-        marker = L.marker(Session.get("LatLng")).addTo(map);
-      }else{
-        map.removeLayer(marker);
-        marker = L.marker(Session.get("LatLng")).addTo(map);
+       }
+       else if (result_arr.length > 1) {
+         //need to implement a dropdown so user can select address
+         for(var i = 0; i < result_arr.length; i++){
+           console.log(result_arr[i]);
+         }
+       }else {
+         console.log("fandt ingen adr");
+       }
       }
-    }
-  });
-};
-*/
+   });
+  }
+});
+
+function setMarker(marker){
+  if(!marker){
+    marker = L.marker(latlng).addTo(map);
+  }else{
+    map.removeLayer(marker);
+    marker = L.marker(latlng).addTo(map);
+  }
+}
