@@ -1,6 +1,7 @@
 
 var map = null;
-var marker = null;
+var marker_db = null;
+var max_zoom = 18;
 
 Template.plantlog_details.helpers({
   getPlant: function(id){
@@ -50,7 +51,6 @@ Template.planting_type.helpers({
 Template.planting_type.events({
   "change .js-insert-plantingtype": function(event, template){
     var field = "planting_type";
-//    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
     var value = {
       value: event.currentTarget.options[event.currentTarget.selectedIndex].value,
       text: event.currentTarget.options[event.currentTarget.selectedIndex].label
@@ -137,9 +137,6 @@ Template.planting_place.helpers({
 Template.planting_place.events({
   "change .js-insert-plantingplace": function(event, template){
     var field = "planting_place";
-//    var value = event.currentTarget.options[event.currentTarget.selectedIndex].value;
-//    var text = event.currentTarget.options[event.currentTarget.selectedIndex].label;
-
     var value = {
       value: event.currentTarget.options[event.currentTarget.selectedIndex].value,
       text: event.currentTarget.options[event.currentTarget.selectedIndex].label
@@ -153,76 +150,65 @@ Template.planting_place.events({
   }
 });
 
+function setMarker(plantlog_id){
+  var plantlog = PlantLog.findOne({_id:plantlog_id});
+  if(plantlog){
+    if(plantlog.planting_location.latlng){
+      var latlng2 = {
+        lat: plantlog.planting_location.latlng.lat,
+        lng: plantlog.planting_location.latlng.lng
+      }
+      map.setView(latlng2, max_zoom);
+      if(!marker_db){                         //global variable, to get the last marker
+        marker_db = L.marker(latlng2).addTo(map);
+      }else{
+        map.removeLayer(marker_db);
+        marker_db = L.marker(latlng2).addTo(map);
+      }
+    }
+  }
+}
+
 Template.planting_location.rendered = function(){
-  var maxZoom = 18;
-  var latlng = null;
-//  var marker = null;
   var plantlog_id = this.data.id;
 
-//  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
-  L.Icon.Default.imagePath = '/images';
+  L.Icon.Default.imagePath = '/images';   //  L.Icon.Default.imagePath = 'packages/bevanhunt_leaflet/images';
   $("#map").height($("#map").width());
-  map = L.map('map', {    //map is a global variable
+  map = L.map('map', {                    //map is a global variable
     center: [56.00, 10.00],
     zoom: 5
   });
 
   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-  maxZoom: 18
+  maxZoom: max_zoom                        //max_zoom is a global variable
   }).addTo(map);
 
-
-  // check if marker is already set in db
-  var plantlog = PlantLog.findOne({_id:plantlog_id});
-  if(plantlog){
-    if(plantlog.planting_location.latlng){
-      latlng = {
-        lat: plantlog.planting_location.latlng.lat,
-        lng: plantlog.planting_location.latlng.lng
-      }
-      //Session.set("LatLng", latlng);
-      map.setView(latlng, 16);
-      if(!marker){
-        marker = L.marker(latlng).addTo(map);
-      }else{
-        map.removeLayer(marker);
-        marker = L.marker(latlng).addTo(map);
-      }
-      //Session.set("locationAddress", plantlog.planting_location.address);
-    }
-  }
-
+  setMarker(plantlog_id);
 
   //register eventlistener to map
   map.on('click', function(e) {
-
-    latlng = e.latlng;
+    var latlng = e.latlng;
     var zoom = map.getZoom();
 
-    //if zoom is equal or less than 18
-    if(zoom < maxZoom){
+    //user is zooming in to set a pin
+    if(zoom < max_zoom){
       map.panTo(latlng);
       map.setZoom(map.getZoom()+4);
     }
-    if(zoom == maxZoom){
-      if(!marker){
-        marker = L.marker(latlng).addTo(map);
-      }else{
-        map.removeLayer(marker);
-        marker = L.marker(latlng).addTo(map);
-      }
 
-    var parameters = {
-      lat: latlng.lat,
-      lon: latlng.lng,
-      zoom: zoom,
-      format: "json",
-      addressdetails: 1
-    }
-    var url = 'http://nominatim.openstreetmap.org/reverse' + L.Util.getParamString(parameters);
-    var referrer = document.referrer;
-     Meteor.call("getGeosearch", url, referrer, function(err, result){
+    //user has zoomed in max and can set pin
+    if(zoom == max_zoom){
+      var parameters = {
+        lat: latlng.lat,
+        lon: latlng.lng,
+        zoom: zoom,
+        format: "json",
+        addressdetails: 1
+      }
+      var url = 'http://nominatim.openstreetmap.org/reverse' + L.Util.getParamString(parameters);
+      var referrer = document.referrer;
+      Meteor.call("getGeosearch", url, referrer, function(err, result){
        if(err){
          console.log("error " + err);
        }
@@ -243,11 +229,16 @@ Template.planting_location.rendered = function(){
            latlng: latlng,
            address: address
          };
-         Meteor.call("updatePlantlog", plantlog_id, query);
-
+         Meteor.call("updatePlantlog", plantlog_id, query, function(err, result){
+           if(err){
+             console.log("error updating " + err);
+           }
+           if(result){
+             setMarker(plantlog_id);
+           }
+         });
        }
-     });
-
+       });
     }
   });
 };
@@ -255,7 +246,7 @@ Template.planting_location.rendered = function(){
 Template.planting_location.helpers({
   location: function(){
     return PlantLog.findOne({_id:this.id}).planting_location;
-  }
+  },
 });
 
 Template.planting_location.events({
@@ -274,22 +265,17 @@ Template.planting_location.events({
      }
      if (result) {
        var result_arr = JSON.parse(result);
+
+       // nominatim returned 1 address
        if (result_arr.length == 1) {
          result = result_arr[0];
          var latlng = {
            lat: result.lat,
            lng: result.lon
          };
-         map.setView(latlng, 16);
-         setMarker(marker);
-/*
-         if(!marker){
-           marker = L.marker(latlng).addTo(map);
-         }else{
-           map.removeLayer(marker);
-           marker = L.marker(latlng).addTo(map);
-         }
-*/       var address = {
+         map.setView(latlng, max_zoom - 2);
+
+         var address = {
            street: result.address.road,
            no: result.address.house_number,
            postcode: result.address.postcode,
@@ -309,14 +295,88 @@ Template.planting_location.events({
            if(err){
              console.log(err);
            }
+           if(result){
+             setMarker(plantlog_id);
+           }
          });
-
-       }
-       else if (result_arr.length > 1) {
-         //need to implement a dropdown so user can select address
-         for(var i = 0; i < result_arr.length; i++){
-           console.log(result_arr[i]);
+        }
+        // nominatim returned multiple results
+        else if (result_arr.length > 1) {
+/*         if(marker){
+           map.removeLayer(marker);
          }
+*/         var latlng_arr = new Array();
+         var markers = new Array();
+         var addresses = {};
+         for(var i = 0; i < result_arr.length; i++){
+           var latlng = {
+             lat: result_arr[i].lat,
+             lng: result_arr[i].lon
+           };
+           latlng_arr.push(latlng);
+
+           //address lookup
+           var street = null, no = null, postcode = null, city = null, country = null, country_code = null;
+           if(result_arr[i].address.road){
+             street = result_arr[i].address.road;
+           }
+           if(result_arr[i].address.house_number){
+             no = result_arr[i].address.house_number;
+           }
+           if(result_arr[i].address.postcode){
+             postcode = result_arr[i].address.postcode;
+           }
+           if(result_arr[i].address.city){
+             city = result_arr[i].address.city;
+           }
+           if(result_arr[i].address.country){
+             country = result_arr[i].address.country;
+           }
+           if(result_arr[i].address.country_code){
+             country_code = result_arr[i].address.country_code;
+           }
+           addresses[latlng.lat + "," + latlng.lng] = {
+             street: street,
+             no: no,
+             postcode: postcode,
+             city: city,
+             country: country,
+             country_code: country_code
+           }
+           //*** click event for marker ***
+           var marker = L.marker(latlng).on("click", function(){
+             map.removeLayer(markers);        //remove the markers
+             L.layerGroup().clearLayers();
+
+            //save location from clicked pin
+             var field = "planting_location";
+             var plantlog_id = template.data.id;
+             var query = {};
+             query[field] = {
+               latlng: this._latlng,
+               address: addresses[this._latlng.lat + "," + this._latlng.lng]
+             };
+             Meteor.call("updatePlantlog", plantlog_id, query, function(err, result){
+               if(err){
+                 console.log(err);
+               }
+               if(result){
+                 setMarker(plantlog_id);
+               }
+             });
+           });
+           markers.push(marker);
+         }
+//         if(!marker){
+           markers = L.layerGroup(markers).addTo(map); //a global variable
+/*         }else{
+           map.removeLayer(marker);
+           markers = L.layerGroup(markers).addTo(map); //a global variable
+         }
+*/
+         var bounds = L.latLngBounds(latlng_arr);
+         map.fitBounds(bounds);
+
        }else {
          console.log("fandt ingen adr");
        }
@@ -324,12 +384,3 @@ Template.planting_location.events({
    });
   }
 });
-
-function setMarker(marker){
-  if(!marker){
-    marker = L.marker(latlng).addTo(map);
-  }else{
-    map.removeLayer(marker);
-    marker = L.marker(latlng).addTo(map);
-  }
-}
