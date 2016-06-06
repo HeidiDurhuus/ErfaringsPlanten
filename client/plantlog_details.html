@@ -32,42 +32,53 @@
 </template>
 
 <template name="planting_type">
-  <label for="plantingType">
-    <span class="glyphicon glyphicon-grain"></span></label> {{i18n "planting_type.type"}}
-    <select name="plantingType" class="js-insert-plantingtype" >
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-grain"></span> {{i18n "planting_type.type"}}
+    </span>
+    <select name="plantingType" class="form-control js-insert-plantingtype" >
       <option value=""> - {{i18n "planting_type.select"}} - </option>
       {{#each options id}}
       <option {{attributes}}>{{text}}</option>
       {{/each}}
     </select>
+
+  </div>
 </template>
 
 
 <template name="planting_date">
-  <label for="plantingDate"><span class="glyphicon glyphicon-calendar"></span></label> {{i18n "planting_date.date"}}
-  <input name="plantingDate" class="" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span> {{i18n "planting_date.date"}}
+    </span>
+    <input name="plantingDate" class="form-control" type="text" id="datepicker" value="{{#if hasDate id}}{{hasDate id}}{{/if}}">
+  </div>
 </template>
 
 <template name="planting_place">
-  <div class="form-group">
-    <label for="plantingPlace">
-    <span class="glyphicon glyphicon-home"></span></label> {{i18n "planting_place.place"}}
-    <select name="plantingPlace" class="js-insert-plantingplace">
-      <option value=""> - {{i18n "planting_place.select"}} - </option>
-      {{#each options id}}
-      <option {{attributes}}>{{text}}</option>
-      {{/each}}
-    </select>
-  </div>
+    <div class="input-group">
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-home"></span> {{i18n "planting_place.place"}}</span>
+        <select name="plantingPlace" class="form-control js-insert-plantingplace">
+          <option value=""> - {{i18n "planting_place.select"}} - </option>
+          {{#each options id}}
+          <option {{attributes}}>{{text}}</option>
+          {{/each}}
+        </select>
+    </div>
 </template>
+
 
 <template name="planting_location">
   <div class="form-group">
     <div class="row">
       <div class="col-md-12">
-        <label for="location">
-        <span class="glyphicon glyphicon-globe"></span></label> {{i18n "planting_location.location"}}
+<!--        <label for="location">
+        <span class="glyphicon glyphicon-globe"></span></label> {{i18n "planting_location.location"}}-->
         <div class="input-group">
+          <span class="input-group-addon">
+          <span class="glyphicon glyphicon-globe"></span> {{i18n "planting_location.location"}}</span>
           <input type="text" id="searchLocationAddress" class="form-control" placeholder="Søg på adresse">
           <span class="input-group-btn">
             <button id="btnGeosearch" class="btn btn-default">
