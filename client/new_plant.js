@@ -11,11 +11,19 @@
  Is it possible and plausible to merge show_plant and new_plant?
  Must somehow pass a variable to the template to fire a "has no plant selected" - check if cursor is empty??
 */
-Template.new_plant.rendered = function(){
-  AutoCompletion.init("input#searchbox");
-}
+
+
+
+Template.new_plant.onCreated(function(){
+  //Meteor.subscribe("plants");
+});
+
 
 Template.new_plant.helpers({
+  rendered: function(){
+    AutoCompletion.init("input#searchbox");
+    AutoCompletion.enableLogging = true;
+  },/*
   plants:function(){
     return Plants.find();
   },
@@ -27,18 +35,23 @@ Template.new_plant.helpers({
   },
   hasEntry: function(){
     return false;
-  },
+  },*/
 });
 
 Template.new_plant.events({
-  "keyup input#searchbox": function(){
-    AutoCompletion.autocomplete({
-      element: 'input#searchbox',
-      collection: Plants,
-      field: 'da_lat',
-      limit: 8,
-      sort: {da: 1}
-    });
+  "keyup input#searchbox": function(event){
+    //console.log(event.currentTarget.value);
+    var value = event.currentTarget.value;
+    if(value.length > 2){
+      Meteor.subscribe("plants", value);
+      AutoCompletion.autocomplete({
+        element: 'input#searchbox',
+        collection: Plants,
+        field: 'da_lat',
+        limit: 8,
+        sort: {da: 1}
+      });
+    }
   },
   "click .js-select-plant": function(event){
     event.preventDefault();

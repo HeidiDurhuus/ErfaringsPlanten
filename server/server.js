@@ -1,10 +1,19 @@
 
 Meteor.publish("plantlog", function(){
+  console.log("server returned plantlog for " + this.userId);
   return PlantLog.find({user_id: this.userId});
 });
 
-Meteor.publish("plants", function(){
-  return Plants.find({});
+Meteor.publish("one-plantlog", function(plantlog_id){
+  return PlantLog.find({_id: plantlog_id, user_id: this.userId});
+});
+
+Meteor.publish("plants", function(string){
+  return Plants.find({da_lat: {$regex: string, $options: "i"}}); //i: case-insensitive
+});
+
+Meteor.publish("plant-samples", function(plant_id){
+  return PlantLog.find({plant_id: plant_id});
 });
 
 Meteor.methods({
