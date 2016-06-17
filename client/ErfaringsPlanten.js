@@ -57,7 +57,7 @@ Template.home.helpers({
     return Template.instance().gapView;
   },*/
   openIndex: function(){
-    console.log(Template.instance().openIndex);
+    //console.log(Template.instance().openIndex);
     return Template.instance().openIndex;
   }
 });

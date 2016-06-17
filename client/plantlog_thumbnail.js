@@ -11,13 +11,10 @@ Template.plantlog_thumbnail.onCreated(function(){
   // Here, this equals the current template instance. We can assign
   // our ReactiveVar to it, making it accessible throughout the
   // current template instance.
-  this.plantlog_details = new ReactiveVar( false );
+//  this.plantlog_details = new ReactiveVar( false );
 });
 
 Template.plantlog_thumbnail.helpers({
-  openDetails: function(){
-    return Template.instance().plantlog_details.get();
-  },
   getPlant:function(plantid){
     return Plants.findOne({_id:plantid})
   },
@@ -53,6 +50,10 @@ Template.plantlog_thumbnail.helpers({
     var lastEntry = entries[entries.length-1];
     return lastEntry.score;
   },
+  getIndex: function(){
+    //for testing
+    return this.gapIndex;//Template.instance().gapIndex.get();
+  }
 });
 
 Template.plantlog_thumbnail.events({
@@ -82,64 +83,21 @@ Template.plantlog_thumbnail.events({
   },*/
   "click #btnDetails": function(event, template){
     event.preventDefault();
-/*
-    console.log(isBreakpoint("xs"));
-    console.log(isBreakpoint("sm"));
-    console.log(isBreakpoint("md"));
-    console.log(isBreakpoint("lg"));
 
-    console.log("breakpoint");
-*/
-/*
-    console.log("click");
-    console.log(this);
-    console.log(this.gapIndex);
-*//*
-    console.log(this.gapState.get());
-    console.log(template.data.gapState.get());
-    if(!this.gapState.get()){
-      this.gapState.set(true);
-    }else {
-      this.gapState.set(false);
+    var gap_index = 0;
+    if(isBreakpoint("xs")){
     }
-    */
-    this.openIndex.set(this.gapIndex);
-//    console.log(this.openIndex.get());
-    /*
-    if(!template.data.gapState.get()){
-      template.data.gapId.set(this.plant._id);
-      template.data.gapView.set(event.currentTarget.id);
-      template.data.gapState.set(true);
+    if(isBreakpoint("sm")){
+      gap_index = getBreakpointIndex(this.gapIndex, 2);
     }
-    else {
-      if(template.data.gapId.get() == this.plant._id){
-        //same plant
-        if(template.data.gapView.get() == event.currentTarget.id){
-          //and same button - close gap
-          template.data.gapState.set(false);
-        }else{
-          //not same button - change button
-          template.data.gapView.set(event.currentTarget.id);
-        }
-      }else{
-        //different plant
-        template.data.gapId.set(this.plant._id);
-        if(!template.data.gapView.get()){
-          //different button
-          template.data.gapView.set(event.currentTarget.id);
-        }
-        //how to reach sibling button to change its color?
-      }
+    if(isBreakpoint("md")){
+      gap_index = getBreakpointIndex(this.gapIndex, 3);
     }
-    */
-    /*
-    if(!template.plantlog_details.get()){
-      template.plantlog_details.set(true);
+    if(isBreakpoint("lg")){
+      gap_index = getBreakpointIndex(this.gapIndex, 4);
+    }
+    this.openIndex.set(gap_index);
 
-    }else{
-      template.plantlog_details.set(false);
-    }
-    console.log(template.plantlog_details.get());*/
   },
   "click .js-register-click": function(event, template){
     if(!clicked_id){
@@ -149,4 +107,34 @@ Template.plantlog_thumbnail.events({
 });
 function isBreakpoint( alias ) {
     return $('.device-' + alias).is(':visible');
+}
+function getBreakpointIndex(gap_index, num_columns){
+  // + 1 to get the modulus right, because index begins with 0
+  gap_index = parseInt(gap_index) + 1;
+  num_columns = parseInt(num_columns);
+  var add = 0;
+
+  console.log("getBreakpointIndex");
+  console.log("gap_index: " + gap_index);
+  console.log("num_columns: " + num_columns);
+
+  if(gap_index > num_columns){
+    add = gap_index % num_columns;
+    console.log("add = gap_index % " + num_columns);
+    console.log(add);
+    if(add != 0){
+      gap_index = gap_index - add;
+      console.log("gap_index = gap_index - add;");
+      console.log(gap_index);
+      add = num_columns;
+      console.log("add = num_columns");
+      console.log(add);
+    }
+  }
+  else{
+  gap_index = num_columns;
+  }
+  console.log("gap_index + add - 1");
+  console.log(gap_index + add - 1);
+  return gap_index + add - 1;
 }
