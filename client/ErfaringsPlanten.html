@@ -1,32 +1,152 @@
-
 <template name="home">
   {{#if signedIn}}
   <div class="row">
     <div class="col-sm-12 col-md-12">
-      <h2>{{i18n "home.title"}} <button id="btnNewPlant" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Log</button></h2>
-      {{> show_logs}}
+      <h2>{{i18n "home.title"}}
+        <button id="btnNewPlant" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Log</button></h2>
+        <div class="row">
+          {{#if newPlant}}
+          <div class="col-xs-12  col-sm-12 col-md-12">
+            {{> new_plant}}
+          </div>
+          {{/if}}
+          {{#each plant in plants}}
+           <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              {{> plantlog_thumbnail plant=plant gapState=gapState gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex}}
+
+
+<!--
+              {{#if openDetails}}
+              hey-->
+      <!--          {{> plantlog_details}}-->
+              <!--{{/if}}-->
+
+<!--
+              {{> plantlog_details}}
+-->
+      <!--        {{#if openDetails}}
+              {{/if}}-->
+          </div>
+
+          {{> gap openIndex=openIndex gapIndex=@index}}
+
+          {{/each}}
+        </div> <!-- row -->
     </div><!-- / col -->
   </div><!-- / row -->
   {{else}}
+    {{> not_signed_in}}
+  {{/if}}
+</template>
+
+<template name="not_signed_in">
   <div class="jumbotron text-center" id="overlapping-element">
     <h1>{{i18n "home.welcome"}}</h1>
     <p> {{i18n "home.text"}}</p>
     <img class="medium-image img-rounded" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Sedum_telephium_subsp_maximum_200807.jpg/618px-Sedum_telephium_subsp_maximum_200807.jpg" alt="" />
   </div>
+</template>
+
+<template name="gap">
+
+  {{#if openGap }}
+              <div class="col-xs-12 col-sm-12 col-md-12">
+                hey
+              </div>
   {{/if}}
 </template>
+
+<!--
+<template name="home">
+  {{#if signedIn}}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <h2>{{i18n "home.title"}}
+        <button id="btnNewPlant" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Log</button></h2>
+-->
+<!--
+
+        <a href="{{ pathFor 'new_plant'}}" class="js-new-plant btn btn-default"><span class="glyphicon glyphicon-plus"></span> Log</a></h2>
+-->
+<!--
+      {{> show_logs}}-->
+<!--
+    </div>
+-->
+    <!-- / col -->
+<!--
+  </div>
+-->
+  <!-- / row -->
+<!--
+  {{else}}
+    {{> not_signed_in}}
+  {{/if}}
+</template>
+
+<template name="not_signed_in">
+  <div class="jumbotron text-center" id="overlapping-element">
+    <h1>{{i18n "home.welcome"}}</h1>
+    <p> {{i18n "home.text"}}</p>
+    <img class="medium-image img-rounded" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Sedum_telephium_subsp_maximum_200807.jpg/618px-Sedum_telephium_subsp_maximum_200807.jpg" alt="" />
+  </div>
+</template>
+
 
 <template name="show_logs">
   <div class="row">
     {{#if newPlant}}
-    <div class="col-xs-12  col-sm-6 col-md-3">
+    <div class="col-xs-12  col-sm-12 col-md-12">
       {{> new_plant}}
     </div>
     {{/if}}
+-->
+<!--
+
+    <div class="col-xs-12  col-sm-12 col-md-12">
+      {{> new_plant}}
+    </div>
+
+  -->
+<!--
     {{#each plants}}
       <div class="col-xs-12 col-sm-6 col-md-3">
         {{> plantlog_thumbnail}}
+        {{> plantlog_details}}
+-->
+<!--        {{#if openDetails}}
+        {{/if}}-->
+<!--
       </div>
     {{/each}}
   </div>
 </template>
+-->
+
+<!--
+ {{#if details}}
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+  <h1>Hey</h1>
+</div>
+</div>
+<div class="row">
+{{else}}
+</div>
+{{/if}}
+
+
+<template name="begin_row">
+</div>
+  <div class="row">
+    <div class="col-md-12">
+</template>
+
+<template name="end_row">
+    </div>
+  </div>
+</div>
+</template>
+-->

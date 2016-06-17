@@ -11,10 +11,22 @@ Meteor.subscribe("plants");
 ////////////////
 var map = null;
 
+//et objekt der holder styr på hvilken visning der skal vises
+//detaljer, entry osv, samt hvilken _id planten har
+open_close = {};
 //////////////////
 /// TEMPLATES
 /////////////////
 
+Template.home.onCreated(function(){
+  this.newPlant = new ReactiveVar(false);
+/*
+  this.gapState = new ReactiveVar(false);
+  this.gapId = new ReactiveVar(null);
+  this.gapView = new ReactiveVar(null);*/
+  this.openIndex = new ReactiveVar(null);
+
+});
 
 Template.home.helpers({
   signedIn: function(){
@@ -24,24 +36,55 @@ Template.home.helpers({
     }else{
       return false;
     }
-  }
-});
-Template.home.events({
-  "click #btnNewPlant": function(event, template){
-    if(!Session.get("newPlant")){
-      Session.set("newPlant", true);
-    }else{
-      Session.set("newPlant", false);            
-    }
-  }
-});
-
-
-Template.show_logs.helpers({
+  },
   plants: function(){
     return PlantLog.find({user_id:Meteor.userId()});
   },
   newPlant: function(){
-    return Session.get("newPlant");
+    return Template.instance().newPlant.get();
+  },/*
+  openDetails: function(){
+    //return Template.instance().plantlog_details.get();
+    return false;
+  },
+  gapState: function(){
+    return Template.instance().gapState;
+  },
+  gapId: function(){
+    return Template.instance().gapId;
+  },
+  gapView: function(){
+    return Template.instance().gapView;
+  },*/
+  openIndex: function(){
+    console.log(Template.instance().openIndex);
+    return Template.instance().openIndex;
+  }
+});
+
+Template.home.events({
+  "click #btnNewPlant": function(event, template){
+/*
+    console.log("clicked");
+    console.log(template);*/
+    if(!template.newPlant.get()){
+      template.newPlant.set(true);
+    }else{
+      template.newPlant.set(false);
+    }
+  }
+});
+
+Template.gap.helpers({
+  openGap: function(){
+    if(this.gapIndex == this.openIndex.get()){
+      return true;
+    }
+    return false;
+  }});
+
+Template.gap.events({
+  "click #foo": function(event, template){
+
   }
 });

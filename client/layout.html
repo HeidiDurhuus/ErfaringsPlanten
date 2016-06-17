@@ -5,13 +5,18 @@
 </head>
 
 <body>
+
 </body>
 
 <!-- this is the main template used by iron:router to build the page -->
 <template name="ApplicationLayout">
-	{{> yield "header"}}
+	{{> navbar}}
 
 	<div class="container">
 	{{> yield "main"}}
 	</div>
+  <div class="device-xs visible-xs"></div>
+  <div class="device-sm visible-sm"></div>
+  <div class="device-md visible-md"></div>
+  <div class="device-lg visible-lg"></div>
 </template>

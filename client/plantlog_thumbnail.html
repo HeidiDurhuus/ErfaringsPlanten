@@ -1,7 +1,15 @@
 <template name="plantlog_thumbnail">
+<!--  {{#if openDetails}}
+  <div class="col-xs-12">
+    {{> plantlog_details}}
+  </div>
+
+  {{else}}
+  <div class="col-xs-12 col-sm-6 col-md-3">
+  -->
   <div class="thumbnail">
     <div class="caption">
-      <p>{{plantname_da}} <br/><small>{{plantname_lat}}</small> </p>
+      <p>{{plant.plantname_da}} <br/><small>{{plantname_lat}}</small> </p>
     </div>
     {{#if hasImage}}
       <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
@@ -16,11 +24,20 @@
     {{/if}}
     <div class="caption">
       <p>
-        <a href="/plantlog_details/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
-  <!--      <button id="btnEyeOpen" data-id="{{_id}}" class="btn btn-default js-open-eye"><span class="glyphicon glyphicon-eye-open"></span></button> -->
+<!--         <a href="/plantlog_details/{{_id}}" class="js-open-details btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+-->
+      <button id="btnDetails" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
         <a href="/plantlog_entries/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
-  <!--      <button id="btnShare" data-id="{{plant_id}}" class="btn btn-default"><span class="glyphicon glyphicon-share"></span></button>-->
-      </p>
+<!--
+<a href="/plantlog_details/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+<a href="/plantlog_entries/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
+
+
+        <button id="btnDetails" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
+        <button id="btnEntries" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button id="btnSamples" class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
+        -->
+    </p>
     {{#if entries.length}}
 
       <p>  {{getDate entries}} : {{#if getText entries}}{{getText entries}} {{/if}} </p>
@@ -30,4 +47,8 @@
     {{/if}}
     </div>
   </div>
+<!--
+</div>
+  {{/if}}
+-->
 </template>
