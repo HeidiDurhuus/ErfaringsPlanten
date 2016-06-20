@@ -83,22 +83,58 @@ Template.plantlog_thumbnail.events({
   },*/
   "click #btnDetails": function(event, template){
     event.preventDefault();
+/*
+    console.log(event);
+    console.log(template);
+    console.log(this);
+*/
+    var gap_index = 0;
+    if(isBreakpoint("xs")){
+      gap_index = template.data.gapIndex;
+    }
+    if(isBreakpoint("sm")){
+      gap_index = getBreakpointIndex(template.data.gapIndex, 2);
+    }
+    if(isBreakpoint("md")){
+      gap_index = getBreakpointIndex(template.data.gapIndex, 3);
+    }
+    if(isBreakpoint("lg")){
+      gap_index = getBreakpointIndex(template.data.gapIndex, 4);
+    }
+    template.data.openIndex.set(gap_index);
+    template.data.gapView.set(event.currentTarget.id);
+    template.data.gapId.set(template.data.plant._id);
+    //Router.go("/plantlog_details/:"+this.plant.id);
+  },
+  "click #btnEntries": function(event, template){
+    event.preventDefault();
+
+    console.log(event);
+    console.log(template.data.gapIndex);
 
     var gap_index = 0;
     if(isBreakpoint("xs")){
+      gap_index = template.data.gapIndex;
     }
     if(isBreakpoint("sm")){
-      gap_index = getBreakpointIndex(this.gapIndex, 2);
+      gap_index = getBreakpointIndex(template.data.gapIndex, 2);
     }
     if(isBreakpoint("md")){
-      gap_index = getBreakpointIndex(this.gapIndex, 3);
+      gap_index = getBreakpointIndex(template.data.gapIndex, 3);
     }
     if(isBreakpoint("lg")){
-      gap_index = getBreakpointIndex(this.gapIndex, 4);
+      gap_index = getBreakpointIndex(template.data.gapIndex, 4);
     }
-    this.openIndex.set(gap_index);
+    template.data.openIndex.set(gap_index);
+    template.data.gapView.set(event.currentTarget.id);
+    template.data.gapId.set(template.data.plant._id);
+/*
+    console.log(event);
 
-  },
+    console.log(template.data.openIndex);
+    console.log(template.data.gapView);
+    console.log(template.data.gapId);
+*/  },
   "click .js-register-click": function(event, template){
     if(!clicked_id){
       clicked_id = event.currentTarget.id;

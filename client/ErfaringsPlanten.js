@@ -21,9 +21,9 @@ open_close = {};
 Template.home.onCreated(function(){
   this.newPlant = new ReactiveVar(false);
 /*
-  this.gapState = new ReactiveVar(false);
+  this.gapState = new ReactiveVar(false);*/
   this.gapId = new ReactiveVar(null);
-  this.gapView = new ReactiveVar(null);*/
+  this.gapView = new ReactiveVar(null);
   this.openIndex = new ReactiveVar(null);
 
 });
@@ -49,13 +49,13 @@ Template.home.helpers({
   },
   gapState: function(){
     return Template.instance().gapState;
-  },
+  },*/
   gapId: function(){
     return Template.instance().gapId;
   },
   gapView: function(){
     return Template.instance().gapView;
-  },*/
+  },
   openIndex: function(){
     //console.log(Template.instance().openIndex);
     return Template.instance().openIndex;
@@ -81,7 +81,32 @@ Template.gap.helpers({
       return true;
     }
     return false;
-  }});
+  },
+  showDetails: function(){
+    if(this.gapView.get() == "btnDetails"){
+      return true;
+    }
+    else {
+      return false;
+    }
+  },
+  showEntries: function(){
+    if(this.gapView.get() == "btnEntries"){
+      return true;
+    }else {
+      return false;
+    }
+
+  },
+  showSamples: function(){
+
+  },
+  gapId: function(){
+    console.log(this.gapId.get());
+    return this.gapId.get();
+  }
+
+});
 
 Template.gap.events({
   "click #foo": function(event, template){

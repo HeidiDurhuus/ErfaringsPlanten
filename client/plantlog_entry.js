@@ -1,7 +1,7 @@
 
 Template.plantlog_entries.helpers({
   plantlog: function(){
-    return PlantLog.findOne({_id: Session.get("plantlog_id")});
+    return PlantLog.findOne({_id: this.plantlog_id});
   },
 });
 

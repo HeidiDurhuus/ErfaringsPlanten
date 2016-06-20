@@ -4,15 +4,24 @@ var marker_db = null;
 var max_zoom = 18;
 
 Template.plantlog_details.helpers({
+/*
   getPlant: function(id){
     return Plants.findOne({_id:id});
-  },
+  },*/
   plantlog: function(){
-    return PlantLog.findOne({_id:Session.get("plantlog_id")});
+//    return PlantLog.findOne({_id:Session.get("plantlog_id")});
+    console.log(this);
+    return PlantLog.findOne({_id:this.plantlog_id});
   },
 });
 
 Template.plantlog_details.events({
+  "click #btnClose": function(event, template){
+    console.log("btnClose");
+    console.log(this);
+    console.log(event);
+    console.log(template);
+  }
 });
 
 
@@ -153,18 +162,24 @@ Template.planting_place.events({
 function setMarker(plantlog_id){
   var plantlog = PlantLog.findOne({_id:plantlog_id});
   if(plantlog){
-    if(plantlog.planting_location.latlng){
-      var latlng2 = {
-        lat: plantlog.planting_location.latlng.lat,
-        lng: plantlog.planting_location.latlng.lng
+    console.log("setMarker");
+    console.log(plantlog);
+    if(plantlog.planting_location){
+      if(plantlog.planting_location.latlng){
+        var latlng2 = {
+          lat: plantlog.planting_location.latlng.lat,
+          lng: plantlog.planting_location.latlng.lng
+        }
+        map.setView(latlng2, max_zoom);
+        if(!marker_db){                         //global variable, to get the last marker
+          marker_db = L.marker(latlng2).addTo(map);
+        }else{
+          map.removeLayer(marker_db);
+          marker_db = L.marker(latlng2).addTo(map);
+        }
       }
-      map.setView(latlng2, max_zoom);
-      if(!marker_db){                         //global variable, to get the last marker
-        marker_db = L.marker(latlng2).addTo(map);
-      }else{
-        map.removeLayer(marker_db);
-        marker_db = L.marker(latlng2).addTo(map);
-      }
+    }else{
+      console.log("has not planting location");
     }
   }
 }

@@ -13,10 +13,10 @@
           {{#each plant in plants}}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <!--  {{> plantlog_thumbnail plant=plant gapState=gapState gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex}}-->
-              {{> plantlog_thumbnail plant=plant gapIndex=@index openIndex=openIndex}}
+              {{> plantlog_thumbnail plant=plant gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex}}
 
             </div>
-              {{> gap openIndex=openIndex gapIndex=@index}}
+              {{> gap gapId=gapId gapView=gapView openIndex=openIndex gapIndex=@index}}
           {{/each}}
         </div> <!-- row -->
     </div><!-- / col -->
@@ -38,7 +38,15 @@
 
   {{#if openGap }}
               <div class="col-xs-12 col-sm-12 col-md-12">
-                hey
+                {{#if showDetails}}
+                  {{> plantlog_details plantlog_id=gapId}}
+                {{/if}}
+                {{#if showEntries}}
+                  {{> plantlog_entries plantlog_id=gapId}}
+                {{/if}}
+                {{#if showSamples}}
+                samples
+                {{/if}}
               </div>
   {{/if}}
 </template>
