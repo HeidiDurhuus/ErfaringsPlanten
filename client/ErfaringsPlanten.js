@@ -19,13 +19,11 @@ open_close = {};
 /////////////////
 
 Template.home.onCreated(function(){
-  this.newPlant = new ReactiveVar(false);
-/*
-  this.gapState = new ReactiveVar(false);*/
-  this.gapId = new ReactiveVar(null);
-  this.gapView = new ReactiveVar(null);
-  this.openIndex = new ReactiveVar(null);
-
+  this.newPlant = new ReactiveVar(false); //show/hide new_plant
+  this.gapId = new ReactiveVar(null);     //the plantlog_id of the thumbnail of which details or entries will be shown for
+  this.gapView = new ReactiveVar(null);   //which button the user pressed: btnDetails, btnEntries...
+  this.openIndex = new ReactiveVar(null); //which template instance should be shown (positioned on the row below the selected thumbnail - taken into account how many columns there are, depending on web, mobile etc)
+  this.itemsCount = new ReactiveVar(null);//number of records in plantlog (=number of thumbnails)
 });
 
 Template.home.helpers({
@@ -38,18 +36,16 @@ Template.home.helpers({
     }
   },
   plants: function(){
-    return PlantLog.find({user_id:Meteor.userId()});
+    var plantlog_cursor = PlantLog.find({user_id:Meteor.userId()});
+    Template.instance().itemsCount.set(plantlog_cursor.count());
+    return plantlog_cursor; //PlantLog.find({user_id:Meteor.userId()});
   },
   newPlant: function(){
     return Template.instance().newPlant.get();
-  },/*
-  openDetails: function(){
-    //return Template.instance().plantlog_details.get();
-    return false;
   },
-  gapState: function(){
-    return Template.instance().gapState;
-  },*/
+  itemsCount: function(){
+    return Template.instance().itemsCount;
+  },
   gapId: function(){
     return Template.instance().gapId;
   },

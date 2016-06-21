@@ -12,11 +12,9 @@
           {{/if}}
           {{#each plant in plants}}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-            <!--  {{> plantlog_thumbnail plant=plant gapState=gapState gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex}}-->
-              {{> plantlog_thumbnail plant=plant gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex}}
-
+              {{> plantlog_thumbnail plant=plant gapId=gapId gapView=gapView gapIndex=@index openIndex=openIndex itemsCount=itemsCount}}
             </div>
-              {{> gap gapId=gapId gapView=gapView openIndex=openIndex gapIndex=@index}}
+              {{> gap gapId=gapId gapView=gapView openIndex=openIndex gapIndex=@index }}
           {{/each}}
         </div> <!-- row -->
     </div><!-- / col -->
