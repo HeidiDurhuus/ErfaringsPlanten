@@ -1,0 +1,57 @@
+<template name="plantlog_samples">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"></h3>
+  </div>
+  <div class="panel-body">
+    {{#each sample in plant_samples}}
+    {{> sample_entry}}
+      _id: {{sample._id}}<br/>
+      name: {{sample.plantname_da}}<br/>
+      user: {{sample.user_id}}<br/><br/>
+    {{/each}}
+  </div>
+  <div class="panel-footer">
+    <button id="btnClose">Luk</button>
+  </div>
+</div>
+</template>
+
+<template name="sample_entry">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body text-center">
+          <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            <span class="glyphicon glyphicon-grain"></span> {{planting_type.text}}
+          </p>
+          <p>
+            <span class="glyphicon glyphicon-calendar"></span> {{planting_date}}
+          </p>
+          <p>
+            <span class="glyphicon glyphicon-home"></span> {{planting_place.text}}
+          </p>
+          <p>
+            <span class="glyphicon glyphicon-globe"></span> {{i18n "plantlog_entries.lat"}}: {{planting_location.lat}}, {{i18n "plantlog_entries.lng"}}: {{planting_location.lng}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      {{#each entries}}
+        {{> plantlog_entry}}
+      {{/each}}
+    </div>
+  </div>
+
+</template>

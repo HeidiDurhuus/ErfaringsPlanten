@@ -95,6 +95,12 @@ Template.gap.helpers({
 
   },
   showSamples: function(){
+    if(this.gapView.get() == "btnSamples"){
+      return true;
+    }else {
+      return false;
+    }
+
 
   },
   gapId: function(){
