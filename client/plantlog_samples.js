@@ -48,16 +48,16 @@ console.log(plantlog.plant_id);
 
 
 Template.plantlog_samples.helpers({
-
+  plantlog: function(){
+    return PlantLog.findOne({_id: this.plantlog_id});
+  },
   plant_samples: function(){
-
-console.log(this);
     var plantlog = PlantLog.findOne({_id: this.plantlog_id});
     console.log("plantlog");
     console.log(plantlog);
     Meteor.subscribe("plant-samples", plantlog.plant_id);
 
-    return PlantLog.find({plant_id: plantlog.plant_id});
+    return PlantLog.find({plant_id: plantlog.plant_id, user_id: {$ne: Meteor.userId()}});
 
 //subscribe
 //  return Template.instance().plant_samples;
@@ -66,7 +66,7 @@ console.log(this);
 });
 
 Template.plantlog_samples.events({
-  "click #foo": function(event, template){
-
+  "click #btnClose": function(event, template){
+    template.data.openIndex.set(null);
   }
 });

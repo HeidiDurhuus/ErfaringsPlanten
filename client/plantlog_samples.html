@@ -1,18 +1,21 @@
 <template name="plantlog_samples">
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"></h3>
+    <h3 class="panel-title">
+      {{#with plantlog}}
+      <p><span class="glyphicon glyphicon-globe"></span>
+        <b>{{plantname_da}} </b><small>{{plantname_lat}}</small> </p>
+      {{/with}}
+    </h3>
   </div>
   <div class="panel-body">
-    {{#each sample in plant_samples}}
-    {{> sample_entry}}
-      _id: {{sample._id}}<br/>
-      name: {{sample.plantname_da}}<br/>
-      user: {{sample.user_id}}<br/><br/>
+    {{#each plant_samples}}
+      {{> sample_entry}}
+      <hr>
     {{/each}}
   </div>
   <div class="panel-footer">
-    <button id="btnClose">Luk</button>
+    <button id="btnClose" class="btn btn-default">Luk</button>
   </div>
 </div>
 </template>
@@ -40,7 +43,7 @@
             <span class="glyphicon glyphicon-home"></span> {{planting_place.text}}
           </p>
           <p>
-            <span class="glyphicon glyphicon-globe"></span> {{i18n "plantlog_entries.lat"}}: {{planting_location.lat}}, {{i18n "plantlog_entries.lng"}}: {{planting_location.lng}}
+            <span class="glyphicon glyphicon-pin"></span> {{i18n "plantlog_entries.lat"}}: {{planting_location.lat}}, {{i18n "plantlog_entries.lng"}}: {{planting_location.lng}}
           </p>
         </div>
       </div>
@@ -53,5 +56,4 @@
       {{/each}}
     </div>
   </div>
-
 </template>

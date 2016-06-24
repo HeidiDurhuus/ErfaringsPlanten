@@ -17,10 +17,7 @@ Template.plantlog_details.helpers({
 
 Template.plantlog_details.events({
   "click #btnClose": function(event, template){
-    console.log("btnClose");
-    console.log(this);
-    console.log(event);
-    console.log(template);
+    template.data.openIndex.set(null);
   }
 });
 

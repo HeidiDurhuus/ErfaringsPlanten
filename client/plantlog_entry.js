@@ -6,8 +6,8 @@ Template.plantlog_entries.helpers({
 });
 
 Template.plantlog_entries.events({
-  "click #foo": function(event, template){
-
+  "click #btnClose": function(event, template){
+    template.data.openIndex.set(null);
   }
 });
 

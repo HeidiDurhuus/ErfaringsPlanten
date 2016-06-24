@@ -13,7 +13,7 @@ Meteor.publish("plants", function(string){
 });
 
 Meteor.publish("plant-samples", function(plant_id){
-  return PlantLog.find({plant_id: plant_id});
+  return PlantLog.find({plant_id: plant_id, user_id: {$ne: this.userId}});
 });
 
 Meteor.methods({

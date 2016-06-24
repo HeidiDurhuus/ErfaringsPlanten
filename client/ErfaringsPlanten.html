@@ -37,13 +37,13 @@
   {{#if openGap }}
               <div class="col-xs-12 col-sm-12 col-md-12">
                 {{#if showDetails}}
-                  {{> plantlog_details plantlog_id=gapId}}
+                  {{> plantlog_details plantlog_id=gapId openIndex=openIndex}}
                 {{/if}}
                 {{#if showEntries}}
-                  {{> plantlog_entries plantlog_id=gapId}}
+                  {{> plantlog_entries plantlog_id=gapId openIndex=openIndex}}
                 {{/if}}
                 {{#if showSamples}}
-                  {{> plantlog_samples plantlog_id=gapId}}
+                  {{> plantlog_samples plantlog_id=gapId openIndex=openIndex}}
                 {{/if}}
               </div>
   {{/if}}
