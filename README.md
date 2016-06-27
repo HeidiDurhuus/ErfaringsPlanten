@@ -1,5 +1,7 @@
 # ErfaringsPlanten
 
-This is now on the prototype stage. The first version is in danish. English will come later.
+Try the prototype here
 
 https://erfaringsplanten.herokuapp.com/
+
+Either create your own login (no email verification) or username: user10@test.com , kode: test123
