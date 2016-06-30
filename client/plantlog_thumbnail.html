@@ -1,12 +1,65 @@
 <template name="plantlog_thumbnail">
-<!--  {{#if openDetails}}
-  <div class="col-xs-12">
-    {{> plantlog_details}}
-  </div>
+  {{#with plant}}
+    <div class="panel panel-default text-center">
+      <!--
+      <div class="panel-heading">
+        <h3 class="panel-title ">
+          {{plantname_da}} <br/><small>{{plantname_lat}}</small>
+        </h3>
+      </div>
+    -->
+      <div class="panel-body">
+<h4>
+  {{getMaxLetters plantname_da 20}} <br/><small>{{getMaxLetters plantname_lat 25}}</small>
 
-  {{else}}
-  <div class="col-xs-12 col-sm-6 col-md-3">
-  -->
+</h4>
+        {{#if hasImage}}
+          <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+          <!-- her skal noget med at checke om der findes et billede i entries, og så hente sidste billede fra entries-->
+        {{else}}
+        <form class="js-upload-image" >
+          <label for="fileupload" id="{{_id}}" class="btn btn-default plant-image-btn custom-file-upload js-register-click">
+            <input type="file" id="fileupload" />
+            <span class="glyphicon glyphicon-picture glyphicon-align-center"></span>
+          </label>
+        </form>
+        {{/if}}
+<br/>
+        {{#if entries.length}}
+
+          <span class="glyphicon glyphicon-calendar"></span>  {{getLastEntryDate entries}} <span class="glyphicon glyphicon-pencil"></span>
+        {{else}}
+          <span class="glyphicon glyphicon-calendar"></span>  {{getDate planting_date}} <span class="glyphicon glyphicon-grain"></span>
+
+        {{/if}}
+
+<!--
+        {{#if entries.length}}
+
+          <p>  {{getDate entries}} : {{#if getText entries}}{{getText entries}} {{/if}} </p>
+          <p>  {{#if getSoilmoist entries}}<span class="glyphicon glyphicon-tint"></span> {{getSoilmoist entries}}{{/if}}</p>
+          <p>  {{#if getScore entries}}<span class="glyphicon glyphicon-leaf"></span> {{getScore entries}} {{/if}}</p>
+
+        {{/if}}
+-->
+      </div>
+      <div class="">
+        <p>
+        <button id="btnDetails" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
+        <button id="btnEntries" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button id="btnSamples" class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
+
+      </p>
+
+      </div>
+    </div>
+  {{/with}}
+</template>
+
+
+
+<!--
+<template name="plantlog_thumbnail">
   {{#with plant}}
   <div class="thumbnail">
     <div class="caption">
@@ -14,7 +67,9 @@
     </div>
     {{#if hasImage}}
       <img src="{{image}}" alt="" class="img-rounded plant-image-thumb"/>
+-->
       <!-- her skal noget med at checke om der findes et billede i entries, og så hente sidste billede fra entries-->
+<!--
     {{else}}
     <form class="js-upload-image" >
       <label for="fileupload" id="{{_id}}" class="btn btn-default plant-image-btn custom-file-upload js-register-click">
@@ -25,22 +80,10 @@
     {{/if}}
     <div class="caption">
       <p>
-<!--         <a href="/plantlog_details/{{_id}}" class="js-open-details btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
--->
       <button id="btnDetails" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
       <button id="btnEntries" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
       <button id="btnSamples" class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
 
-<!--
-<a href="/plantlog_details/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
-<a href="/plantlog_entries/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
-<a href="/plantlog_entries/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
-
-
-        <button id="btnDetails" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button>
-        <button id="btnEntries" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
-        <button id="btnSamples" class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
-        -->
     </p>
     {{#if entries.length}}
 
@@ -51,10 +94,6 @@
     {{/if}}
     </div>
   </div>
-
-<!--
-</div>
-  {{/if}}
--->
 {{/with}}
 </template>
+-->

@@ -5,6 +5,15 @@ Template.plantlog_thumbnail.onCreated(function(){
 });
 
 Template.plantlog_thumbnail.helpers({
+  getMaxLetters: function(string, length){
+    var short_str = "";
+    if(string.length > length){
+      short_str = string.substring(0, length) + "...";
+    }else {
+      short_str = string;
+    }
+    return short_str;
+  },
   getPlant:function(plantid){
     return Plants.findOne({_id:plantid})
   },
@@ -20,13 +29,19 @@ Template.plantlog_thumbnail.helpers({
     }
     return true;
   },
-  getDate: function(entries){
+  getLastEntryDate: function(entries){
     var lastEntry = entries[entries.length-1];
     var date = lastEntry.date;
     if(date){
-      return date.getDate() + "/" + (date.getMonth() + 1) +"/"+ date.getFullYear();
+      var date_moment = moment(date);
+      return date_moment.format("Do MMMM YYYY");
+      //return date.getDate() + "/" + (date.getMonth() + 1) +"/"+ date.getFullYear();
     }
     return "";
+  },
+  getDate: function(date){
+    var date_moment = moment(date);
+    return date_moment.format("Do MMMM YYYY");    
   },
   getText: function(entries){
     var lastEntry = entries[entries.length-1];
