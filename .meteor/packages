@@ -29,3 +29,4 @@ anti:i18n
 http
 rzymek:moment
 rzymek:moment-locale-da #installs momentjs:moment as well
+edgee:slingshot
