@@ -1,3 +1,3 @@
 if(Meteor.isServer){
-  process.env.TEST = 'an environment variable';
+  process.env.TEST2 = 'an environment variable';
 }
