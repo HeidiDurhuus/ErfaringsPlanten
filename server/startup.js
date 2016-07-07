@@ -1,7 +1,4 @@
 Meteor.startup(function () {
-  var foo = process.env.TEST;
-  console.log(foo);
-
   if (!Meteor.users.findOne()){
     for (var i=1;i<9;i++){
       var email = "user"+i+"@test.com";
