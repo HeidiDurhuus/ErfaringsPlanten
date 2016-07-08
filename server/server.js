@@ -1,4 +1,27 @@
+Slingshot.GoogleCloud.directiveDefault.GoogleSecretKey = process.env.GOOGLE_SECRET_KEY;
+Slingshot.GoogleCloud.directiveDefault.GoogleAccessId = process.env.GOOGLE_ACCESS_ID;
 
+Slingshot.fileRestrictions("myFileUpload", {
+  allowedFileTypes: ["image/png", "image/jpeg", "image/gif"],
+  maxSize: 10 * 1024 * 1024 // 10 MB (use null for unlimited)
+});
+
+Slingshot.createDirective("myFileUpload",
+  Slingshot.GoogleCloud, {
+    bucket: "erfaringsplanten",
+    acl: "public-read",
+    authorize: function(){
+      if(!this.userId){
+        var message="please login before uploading images";
+        throw new Meteor.Error("Login Required", message);
+      }
+      return true;
+    },
+    key: function(file){
+      return this.userId + "/" + file.name;
+    }
+  }
+);
 Meteor.publish("plantlog", function(){
   console.log("server returned plantlog for " + this.userId);
   return PlantLog.find({user_id: this.userId});

@@ -41,7 +41,7 @@ Template.plantlog_thumbnail.helpers({
   },
   getDate: function(date){
     var date_moment = moment(date);
-    return date_moment.format("Do MMMM YYYY");    
+    return date_moment.format("Do MMMM YYYY");
   },
   getText: function(entries){
     var lastEntry = entries[entries.length-1];
@@ -68,7 +68,7 @@ Template.plantlog_thumbnail.events({
     console.log(id);
     var file = event.target.files[0];
     if(!file){return;}
-
+/*
     var fileReader = new FileReader();
     var dataUrl;
     fileReader.onload = function(event){
@@ -76,14 +76,21 @@ Template.plantlog_thumbnail.events({
       Meteor.call("saveFile", dataUrl, id);
     }
     fileReader.readAsDataURL(file);
+*/
+    var uploader = new Slingshot.Upload("myFileUpload");
+    uploader.send(file, function(error, downloadUrl){
+      if(error){
+        console.log("error uploading", uploader.xhr.response);
+        alert(error);
+      }
+      else{
+        Meteor.call("saveFile", downloadUrl, id);
+      }
+    });
     clicked_id = null;
   },
   "click #btnDetails": function(event, template){
     event.preventDefault();
-
-    console.log(event);
-    console.log(template.data.itemsCount);
-    console.log(this);
 
     var gap_index = 0;
     if(isBreakpoint("xs")){
