@@ -46,6 +46,12 @@ console.log(plantlog.plant_id);
 */
 });
 
+Template.plantlog_samples.onRendered(function(){
+  var x = document.getElementById("theGap");
+  //$('html, body').animate({scrollTop: x.offsetTop}, "slow");
+  x.scrollIntoView();
+});
+
 
 Template.plantlog_samples.helpers({
   plantlog: function(){
@@ -67,6 +73,9 @@ Template.plantlog_samples.helpers({
 
 Template.plantlog_samples.events({
   "click #btnClose": function(event, template){
+    console.log(event);
+    console.log(template);
+    document.getElementById(template.data.plantlog_id).scrollIntoView();
     template.data.openIndex.set(null);
   }
 });

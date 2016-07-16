@@ -1,3 +1,9 @@
+Template.plantlog_entries.onRendered(function(){
+  var x = document.getElementById("theGap");
+  //$('html, body').animate({scrollTop: x.offsetTop}, "slow");
+  x.scrollIntoView();
+});
+
 
 Template.plantlog_entries.helpers({
   plantlog: function(){
@@ -7,6 +13,7 @@ Template.plantlog_entries.helpers({
 
 Template.plantlog_entries.events({
   "click #btnClose": function(event, template){
+    document.getElementById(template.data.plantlog_id).scrollIntoView();
     template.data.openIndex.set(null);
   }
 });

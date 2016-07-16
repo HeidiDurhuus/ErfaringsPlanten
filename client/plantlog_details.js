@@ -3,6 +3,12 @@ var map = null;
 var marker_db = null;
 var max_zoom = 18;
 
+Template.plantlog_details.onRendered(function(){
+  var x = document.getElementById("theGap");
+  //$('html, body').animate({scrollTop: x.offsetTop}, "slow");
+  x.scrollIntoView();
+});
+
 Template.plantlog_details.helpers({
 /*
   getPlant: function(id){
@@ -17,6 +23,7 @@ Template.plantlog_details.helpers({
 
 Template.plantlog_details.events({
   "click #btnClose": function(event, template){
+    document.getElementById(template.data.plantlog_id).scrollIntoView();
     template.data.openIndex.set(null);
   }
 });

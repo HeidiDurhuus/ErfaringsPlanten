@@ -11,6 +11,13 @@
  Is it possible and plausible to merge show_plant and new_plant?
  Must somehow pass a variable to the template to fire a "has no plant selected" - check if cursor is empty??
 */
+/*
+import { Template } from 'meteor/templating'
+*/
+
+Template.new_plant.onRendered(function(){
+  this.$('#searchbox').focus();
+})
 
 Template.new_plant.helpers({
   rendered: function(){
