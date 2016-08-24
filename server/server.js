@@ -32,7 +32,9 @@ Meteor.publish("one-plantlog", function(plantlog_id){
 });
 
 Meteor.publish("plants", function(string){
-  return Plants.find({da_lat: {$regex: string, $options: "i"}}); //i: case-insensitive
+  if(string){
+    return Plants.find({da_lat: {$regex: string, $options: "i"}}); //i: case-insensitive
+  }
 });
 
 Meteor.publish("plant-samples", function(plant_id){
